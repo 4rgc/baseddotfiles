@@ -75,7 +75,7 @@ end
 
 local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
 map("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', 'Autocomplete next', opts)
-map("i", "<S-TAB>", [[coc#pum#visible() ?'{} coc#pum#prev(1) : "\<C-h>"]], 'Autocomplete prev', opts)
+map("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], 'Autocomplete prev', opts)
 map("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], 'Autocomplete select', opts)
 
 -- GoTo code navigation
@@ -92,26 +92,5 @@ map("n", "<leader>rn", "<Plug>(coc-rename)", 'Rename', {silent = true})
 map("x", "<leader>f", "<Plug>(coc-format-selected)", 'Format selected', {silent = true})
 map("n", "<leader>f", "<Plug>(coc-format-selected)", 'Format selected', {silent = true})
 
-vim.api.nvim_create_augroup("CocGroup", {})
+map("n", "<C-p>", "<cmd>lua require('legendary').find()<CR>", 'Open Legendary')
 
--- Setup formatexpr specified filetype(s)
-vim.api.nvim_create_autocmd("FileType", {
-    group = "CocGroup",
-    pattern = "typescript,json",
-    command = "setl formatexpr=CocAction('formatSelected')",
-    desc = "Setup formatexpr specified filetype(s)."
-})
-
--- Update signature help on jump placeholder
-vim.api.nvim_create_autocmd("User", {
-    group = "CocGroup",
-    pattern = "CocJumpPlaceholder",
-    command = "call CocActionAsync('showSignatureHelp')",
-    desc = "Update signature help on jump placeholder"
-})
-
-vim.api.nvim_create_autocmd("CursorHold", {
-    group = "CocGroup",
-    command = "silent call CocActionAsync('highlight')",
-    desc = "Highlight symbol under cursor on CursorHold"
-})
