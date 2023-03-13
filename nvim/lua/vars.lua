@@ -1,4 +1,5 @@
 vim.o.relativenumber = true
+vim.o.number = true
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.expandtab = true
@@ -16,3 +17,7 @@ vim.opt.updatetime = 300
 -- Always show the signcolumn, otherwise it would shift the text each time
 -- diagnostics appeared/became resolved
 vim.opt.signcolumn = "yes"
+
+vim.o.timeout = true
+vim.o.timeoutlen = 300
+
