@@ -54,11 +54,14 @@ map ('n', '<leader>8', '<Cmd>BufferLineGoToBuffer 8<CR>'  )
 map ('n', '<leader>9', '<Cmd>BufferLineGoToBuffer 9<CR>'  )
 map ('n', '<leader>$', '<Cmd>BufferLineGoToBuffer -1<CR>' )
 
--- git mappings
-map ( 'n', '<leader>ff', '<cmd>Telescope find_files<cr>' )
+-- Telescope mappings
+map ( 'n', '<leader>ff', '<cmd>Telescope git_files<cr>' )
+map ( 'n', '<leader>fa', '<cmd>Telescope find_files find_command=rg,--no-ignore-vcs,--hidden,--files<cr>' )
 map ( 'n', '<leader>fg', '<cmd>Telescope live_grep<cr>' )
 map ( 'n', '<leader>fb', '<cmd>Telescope buffers<cr>' )
 map ( 'n', '<leader>fh', '<cmd>Telescope help_tags<cr>' )
+
+-- git mappings
 map ( 'n', '<leader>gs', '<cmd>:G<CR>' )
 map ( 'n', '<leader>gd', '<cmd>DiffviewOpen<CR>' )
 map ( 'n', '<leader>gS', '<cmd>DiffviewOpen HEAD^..HEAD<CR>' )
