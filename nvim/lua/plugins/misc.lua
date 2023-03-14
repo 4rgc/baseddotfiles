@@ -20,10 +20,12 @@ return {
     config = function ()
       require('mkdnflow').setup({
           mappings = {
-              MkdnTableNextCell = {'i', '<F2>'},
-              MkdnTablePrevCell = {'i', '<F3>'},
               MkdnFoldSection = {'n', '<leader>fs'},
-              MkdnToggleToDo = {{'n', 'v'}, '<C-c>'}
+              MkdnToggleToDo = {{'n', 'v'}, '<C-c>'},
+              MkdnTableNextCell = {'i', '<Tab>'},
+              MkdnTablePrevCell = {'i', '<S-Tab>'},
+              MkdnTableNextRow = false,
+              MkdnTablePrevRow = {'i', '<M-CR>'},
           }
       })
     end
