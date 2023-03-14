@@ -24,3 +24,5 @@ vim.o.timeoutlen = 300
 -- linewrap column
 vim.o.colorcolumn = 120
 
+-- other setup
+vim.filetype.add({filename = {['Jenkinsfile'] = 'groovy'}})
