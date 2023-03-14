@@ -21,7 +21,12 @@ return {
     event = "BufReadPre",
     config = function()
       require("dressing").setup {
-        input = { relative = "editor" },
+        input = {
+          win_options = {
+            winhighlight = require('ofirkai.plugins.dressing').winhighlight,
+          },
+          relative = "editor" 
+        },
         select = {
           backend = { "telescope", "fzf", "builtin" },
         },
