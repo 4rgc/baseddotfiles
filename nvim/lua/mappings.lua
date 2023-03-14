@@ -98,3 +98,5 @@ map("n", "<leader>f", "<Plug>(coc-format-selected)", 'Format selected', {silent 
 
 map("n", "<C-p>", "<cmd>lua require('legendary').find()<CR>", 'Open Legendary')
 
+-- Markdown mappings
+map({ 'n', 'v' }, '<C-l>', MappingWithFType('markdown', function () vim.cmd('MkdnCreateLink') end), 'Create markdown hyperlink')
