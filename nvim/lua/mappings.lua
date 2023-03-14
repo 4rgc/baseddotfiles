@@ -40,7 +40,7 @@ map('n', '<leader>mp', MappingWithFType(
 map('n', '<leader>tt', '<Cmd>NvimTreeToggle<CR>')
 
 -- map close buffer
-map('n', '<leader>Bc', ':bp<bar>sp<bar>bn<bar>bd<CR>')
+map('n', '<leader>q', ':bp<bar>sp<bar>bn<bar>bd<CR>')
 
 -- map goto buffer number
 map ('n', '<leader>1', '<Cmd>BufferLineGoToBuffer 1<CR>'  )
