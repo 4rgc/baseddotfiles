@@ -64,6 +64,7 @@ map ( 'n', '<leader>fh', '<cmd>Telescope help_tags<cr>' )
 -- git mappings
 map ( 'n', '<leader>gs', '<cmd>:G<CR>' )
 map ( 'n', '<leader>gd', '<cmd>DiffviewOpen<CR>' )
+map ( 'n', '<leader>gC', '<cmd>DiffviewClose<CR>' )
 map ( 'n', '<leader>gS', '<cmd>DiffviewOpen HEAD^..HEAD<CR>' )
 map ( 'n', '<leader>gc', '<cmd>Telescope git_branches<CR>' )
 map ( 'n', '<leader>gh', '<cmd>DiffviewFileHistory %<CR>' )
