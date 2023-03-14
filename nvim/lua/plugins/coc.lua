@@ -1,3 +1,9 @@
+-- also need to install:
+--          'https://github.com/rafamadriz/friendly-snippets@main',
+--          'coc-webview',
+--          'coc-lua',
+--          'coc-markdown-preview-enhanced'
+
 return {
   {
     'neoclide/coc.nvim',
@@ -10,10 +16,6 @@ return {
           'coc-html',
           'coc-json',
           'coc-prettier',
-          'friendly-snippets',
-          'coc-webview',
-          'coc-lua',
-          'coc-markdown-preview-enhanced'
         }
     end
   }
