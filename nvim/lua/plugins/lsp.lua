@@ -3,9 +3,14 @@ return {
   {
     'neovim/nvim-lspconfig',
     config = function ()
-      require('lspconfig').clangd.setup {
+      require('lspconfig')['tsserver'].setup {
         on_attach = function(client, bufnr)
-          navic.attach(client, bufnr)
+          require('nvim-navic').attach(client, bufnr)
+        end
+      }
+      require('lspconfig')['lua_ls'].setup {
+        on_attach = function(client, bufnr)
+          require('nvim-navic').attach(client, bufnr)
         end
       }
     end
@@ -13,6 +18,14 @@ return {
   {
     'ray-x/lsp_signature.nvim',
     config = function ()
+      local lsp_signature_cfg = {
+        bind = true,
+        use_lspsaga = false,
+        doc_lines = 0,
+        floating_window = false,
+        hint_scheme = 'LspSignatureHintVirtualText',
+        hint_prefix = ' ',
+      }
       require('lsp_signature').setup(lsp_signature_cfg)
     end
   }
