@@ -3,14 +3,23 @@ return {
     -- sessions
     'jedrzejboczar/possession.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function ()
+    config = function()
       require('possession').setup {
-          commands = {
-              save = 'SSave',
-              load = 'SLoad',
-              delete = 'SDelete',
-              list = 'SList',
+        commands = {
+          save = 'SSave',
+          load = 'SLoad',
+          delete = 'SDelete',
+          list = 'SList',
+        },
+        plugins = {
+          delete_hidden_buffers = {
+            hooks = {
+              'before_load',
+              not vim.o.sessionoptions:match('buffer') and 'before_save',
+            },
+            force = false, -- or fun(buf): boolean
           }
+        },
       }
     end
   },
