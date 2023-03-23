@@ -26,16 +26,16 @@ return {
   {
     -- Markdown helper commands
     'jakewvincent/mkdnflow.nvim',
-    config = function ()
+    config = function()
       require('mkdnflow').setup({
-          mappings = {
-              MkdnFoldSection = {'n', '<leader>fs'},
-              MkdnToggleToDo = {{'n', 'v'}, '<C-c>'},
-              MkdnTableNextCell = {'i', '<Tab>'},
-              MkdnTablePrevCell = {'i', '<S-Tab>'},
-              MkdnTableNextRow = false,
-              MkdnTablePrevRow = {'i', '<M-CR>'},
-          }
+        mappings = {
+          MkdnFoldSection = { 'n', '<leader>fs' },
+          MkdnToggleToDo = { { 'n', 'v' }, '<C-c>' },
+          MkdnTableNextCell = { 'i', '<Tab>' },
+          MkdnTablePrevCell = { 'i', '<S-Tab>' },
+          MkdnTableNextRow = false,
+          MkdnTablePrevRow = { 'i', '<M-CR>' },
+        }
       })
     end
   },
@@ -48,9 +48,9 @@ return {
   -- goated theme
   {
     'ofirgall/ofirkai.nvim',
-    config = function ()
+    config = function()
       -- needed because somehow the automatic setup doesn't work
-      require('ofirkai').setup()
+      require('ofirkai').setup {}
     end
   },
   -- colorful brackets
@@ -59,7 +59,7 @@ return {
   {
     'kylechui/nvim-surround',
     version = "*",
-    config = function ()
+    config = function()
       require('nvim-surround').setup()
     end
   },
@@ -84,9 +84,9 @@ return {
   -- find out current semantic position in a file
   {
     'SmiteshP/nvim-navic',
-    config = function ()
+    config = function()
       require('nvim-navic').setup {
-          separator = "  "
+        separator = "  "
       }
     end
   },
