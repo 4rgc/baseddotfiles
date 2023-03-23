@@ -2,7 +2,7 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     version = '0.1.x',
-    dependencies = { 'nvim-lua/plenary.nvim', 'jedrzejboczar/possession.nvim', 'fannheyward/telescope-coc.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim', 'jedrzejboczar/possession.nvim' },
     config = function ()
       require('telescope').setup({
         extensions = {
@@ -12,8 +12,6 @@ return {
         }
       })
       require('telescope').load_extension('possession')
-      require('telescope').load_extension('coc')
-
     end,
   },
   {
@@ -25,7 +23,7 @@ return {
           win_options = {
             winhighlight = require('ofirkai.plugins.dressing').winhighlight,
           },
-          relative = "editor" 
+          relative = "editor"
         },
         select = {
           backend = { "telescope", "fzf", "builtin" },
