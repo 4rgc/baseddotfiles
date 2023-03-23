@@ -95,9 +95,19 @@ return {
     build = function() vim.fn['mkdp#util#install']() end,
   },
   {
-    'williamboman/mason.nvim',
-    config = function ()
-        require('mason').setup()
+    'L3MON4D3/LuaSnip',
+    -- follow latest release.
+    version = '1.*',
+    -- install jsregexp (optional!).
+    build = 'make install_jsregexp',
+    config = function()
+      require("luasnip.loaders.from_snipmate").lazy_load()
+    end
+  },
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
     end
   }
 }
