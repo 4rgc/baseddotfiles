@@ -1,10 +1,6 @@
+local map = require('util').map
 
 -- helper methods --
-local function map(mode, lhs, rhs, desc, opts)
-  opts = opts or { silent = true }
-  opts.desc = desc
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
 
 local getFType = function () return vim.bo.filetype end
 
