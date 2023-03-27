@@ -36,6 +36,9 @@
   "plenary.nvim": { "branch": "master", "commit": "253d34830709d690f013daf2853a9d21ad7accab" },
   "possession.nvim": { "branch": "master", "commit": "fda62baba9fc547658b3546f919127f1363e0cb3" },
   "telescope.nvim": { "branch": "master", "commit": "c1a2af0af69e80e14e6b226d3957a064cd080805" },
+  "vim-dadbod": { "branch": "master", "commit": "389a2b0120f82b13d51ff7c07f5c13f9bc9f412f" },
+  "vim-dadbod-ui": { "branch": "master", "commit": "986324fa6372170ec47b28a5558ae7f7185e1d71" },
+  "vim-dotenv": { "branch": "master", "commit": "5c51cfcf8d87280d6414e03cd6b253eb70ecb800" },
   "vim-fugitive": { "branch": "master", "commit": "5b52a0f395065d6cb7b65a00a5e17eaf9ebd64d5" },
   "vim-jsx-pretty": { "branch": "master", "commit": "6989f1663cc03d7da72b5ef1c03f87e6ddb70b41" },
   "which-key.nvim": { "branch": "main", "commit": "fb027738340502b556c3f43051f113bcaa7e8e63" }

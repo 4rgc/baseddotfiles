@@ -109,5 +109,6 @@ return {
     config = function()
       require('Comment').setup()
     end
-  }
+  },
+  { 'tpope/vim-dotenv' }
 }

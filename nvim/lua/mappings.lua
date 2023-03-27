@@ -70,3 +70,7 @@ map("n", "<C-p>", "<cmd>lua require('legendary').find()<CR>", 'Open Legendary')
 -- Markdown mappings
 map({ 'n', 'v' }, '<C-l>', MappingWithFType('markdown', function () vim.cmd('MkdnCreateLink') end), 'Create markdown hyperlink')
 
+-- db mappings
+map('n', '<leader>du', '<Cmd>DBUIToggle<CR>', 'Toggle DB UI')
+map('n', '<leader>db', '<Cmd>DBUIFindBuffer<CR>', 'Find DB UI Buffer')
+map('n', '<leader>dl', '<Cmd>DBUILastQueryInfo<CR>', 'Last query info')
