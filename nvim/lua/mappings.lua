@@ -74,3 +74,6 @@ map({ 'n', 'v' }, '<C-l>', MappingWithFType('markdown', function () vim.cmd('Mkd
 map('n', '<leader>du', '<Cmd>DBUIToggle<CR>', 'Toggle DB UI')
 map('n', '<leader>db', '<Cmd>DBUIFindBuffer<CR>', 'Find DB UI Buffer')
 map('n', '<leader>dl', '<Cmd>DBUILastQueryInfo<CR>', 'Last query info')
+
+-- code_runner mappings
+map('n', '<F7>', '<Cmd>RunCode<CR>', 'Run current file')
