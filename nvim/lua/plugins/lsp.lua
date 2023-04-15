@@ -2,7 +2,9 @@ package.path = package.path .. ';../?.lua'
 local map = require('util').map
 local mason_servers = require('util').mason_servers
 
-local on_attach = function(_, bufnr)
+local formattingAugrp = vim.api.nvim_create_augroup("LspFormatting", {})
+
+local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -24,6 +26,17 @@ local on_attach = function(_, bufnr)
   map('n', '<space>ca', vim.lsp.buf.code_action, 'Code action', bufopts)
   map('n', 'gr', vim.lsp.buf.references, 'Show references', bufopts)
   map('n', '<space>f', function() vim.lsp.buf.format { async = true } end, 'Format', bufopts)
+
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = formattingAugrp, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = formattingAugrp,
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.format()
+      end,
+    })
+  end
 end
 
 return {
