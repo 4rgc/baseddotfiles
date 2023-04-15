@@ -125,7 +125,12 @@ return {
         end
     },
     {
-        'brenoprata10/nvim-highlight-colors'
+        'brenoprata10/nvim-highlight-colors',
+        config = function()
+            require('nvim-highlight-colors').setup {
+                enable_tailwind = true
+            }
+        end
     },
     {
         'lukas-reineke/indent-blankline.nvim',
@@ -154,6 +159,7 @@ return {
     },
     {
         'vim-test/vim-test',
+        dependencies = { 'tpope/vim-dispatch' },
         config = function ()
             vim.cmd("let test#strategy = 'dispatch'")
         end
