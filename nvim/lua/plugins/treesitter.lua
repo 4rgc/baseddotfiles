@@ -2,9 +2,11 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    config = function ()
+    config = function()
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { "c", "lua", "vim", "help", "query", 'dockerfile', 'dot', 'git_rebase', 'gitattributes', 'gitcommit', 'gitignore', 'graphql', 'html', 'javascript', 'jsdoc', 'json', 'json5', 'latex', 'lua', 'markdown', 'markdown_inline', 'sql', 'python', 'regex', 'ruby', 'rust', 'scss', 'tsx', 'typescript', 'yaml'},
+        ensure_installed = { "c", "lua", "vim", "help", "query", 'dockerfile', 'dot', 'git_rebase', 'gitattributes',
+          'gitcommit', 'gitignore', 'graphql', 'html', 'javascript', 'jsdoc', 'json', 'json5', 'latex', 'lua',
+          'markdown', 'markdown_inline', 'sql', 'python', 'regex', 'ruby', 'rust', 'scss', 'tsx', 'typescript', 'yaml' },
         highlight = {
           enable = true,
           -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
@@ -14,16 +16,14 @@ return {
           additional_vim_regex_highlighting = false,
         },
         rainbow = {
-            enable = true,
-            extended_mode = false
+          enable = true,
+          extended_mode = false
         },
 
         textobjects = {
           select = {
             enable = true,
-
             lookahead = true,
-
             keymaps = {
               -- You can use the capture groups defined in textobjects.scm
               ["af"] = "@function.outer",
@@ -34,7 +34,7 @@ return {
             },
             selection_modes = {
               ['@parameter.outer'] = 'v', -- charwise
-              ['@function.outer'] = 'V', -- linewise
+              ['@function.outer'] = 'V',  -- linewise
               ['@class.outer'] = '<c-v>', -- blockwise
             },
             include_surrounding_whitespace = true,
@@ -74,7 +74,6 @@ return {
               ["[c"] = "@conditional.outer",
             }
           },
-
           lsp_interop = {
             enable = true,
             border = 'none',
@@ -86,10 +85,26 @@ return {
           },
         },
       }
-
     end
   },
   { 'nvim-treesitter/nvim-treesitter-context' },
-  { 'nvim-treesitter/nvim-treesitter-textobjects', dependencies = { 'nvim-treesitter', 'nvim-treesitter/nvim-treesitter' } }
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    dependencies = { 'nvim-treesitter',
+      'nvim-treesitter/nvim-treesitter' }
+  },
+  {
+    'windwp/nvim-ts-autotag',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('nvim-ts-autotag').setup {}
+    end
+  },
+  {
+    'axelvc/template-string.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('template-string').setup {}
+    end
+  }
 }
-
