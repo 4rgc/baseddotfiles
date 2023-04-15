@@ -26,6 +26,7 @@ return {
     {
         -- Markdown helper commands
         'jakewvincent/mkdnflow.nvim',
+        ft = 'markdown',
         config = function()
             require('mkdnflow').setup({
                 mappings = {
@@ -40,9 +41,9 @@ return {
         end
     },
     -- auto type bracket pairs
-    'jiangmiao/auto-pairs',
+    { 'jiangmiao/auto-pairs', event = 'BufReadPost' },
     -- pretty print jsx
-    'maxmellon/vim-jsx-pretty',
+    { 'maxmellon/vim-jsx-pretty', ft = { 'javascriptreact', 'typescriptreact' } },
     -- useful methods
     'nvim-lua/plenary.nvim',
     -- goated theme
@@ -54,7 +55,7 @@ return {
         end
     },
     -- colorful brackets
-    'p00f/nvim-ts-rainbow',
+    { 'p00f/nvim-ts-rainbow', lazy = true },
     -- surround chunks of text/code with brackets/tags/quotes
     {
         'kylechui/nvim-surround',
@@ -84,6 +85,7 @@ return {
     -- find out current semantic position in a file
     {
         'SmiteshP/nvim-navic',
+        event = 'BufReadPre',
         config = function()
             require('nvim-navic').setup {
                 separator = "  "
@@ -92,10 +94,12 @@ return {
     },
     {
         'iamcco/markdown-preview.nvim',
+        ft = 'markdown',
         build = function() vim.fn['mkdp#util#install']() end,
     },
     {
         'L3MON4D3/LuaSnip',
+        event = 'BufReadPre',
         -- follow latest release.
         version = '1.*',
         -- install jsregexp (optional!).
@@ -106,6 +110,7 @@ return {
     },
     {
         'numToStr/Comment.nvim',
+        event = 'BufReadPre',
         config = function()
             require('Comment').setup()
         end
@@ -119,6 +124,7 @@ return {
     },
     {
         'folke/todo-comments.nvim',
+        lazy = true,
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
             require('todo-comments').setup {}
@@ -126,6 +132,7 @@ return {
     },
     {
         'brenoprata10/nvim-highlight-colors',
+        event = 'BufReadPre',
         config = function()
             require('nvim-highlight-colors').setup {
                 enable_tailwind = true
@@ -134,6 +141,7 @@ return {
     },
     {
         'lukas-reineke/indent-blankline.nvim',
+        event = 'BufReadPre',
         config = function()
             vim.cmd [[highlight IndentBlanklineIndent1 guibg=#2E2314 gui=nocombine]]
             vim.cmd [[highlight IndentBlanklineIndent2 guibg=#292B1C gui=nocombine]]

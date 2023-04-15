@@ -16,7 +16,7 @@ return {
   },
   {
     'stevearc/dressing.nvim',
-    event = "BufReadPre",
+    event = "VeryLazy",
     config = function()
       require("dressing").setup {
         input = {

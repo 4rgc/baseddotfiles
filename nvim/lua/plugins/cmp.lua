@@ -4,6 +4,7 @@ local mason_servers = require('util').mason_servers
 return {
   {
     'hrsh7th/nvim-cmp',
+    event = 'BufReadPre',
     dependencies = {
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-nvim-lsp',
