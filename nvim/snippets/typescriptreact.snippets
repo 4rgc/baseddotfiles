@@ -1,0 +1,10 @@
+snippet tsfc "TS Functional Component"
+	interface ${1}Props extends React.ComponentPropsWithoutRef<"${2}"> {
+
+	}
+
+	const ${1}: React.FC<${1}Props> = (props) => {
+		return <${2}>${3}</${2}>;
+	};
+
+	export default ${1};
