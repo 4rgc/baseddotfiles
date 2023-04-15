@@ -1,7 +1,8 @@
+vim.opt.termguicolors = true
 vim.o.relativenumber = true
 vim.o.number = true
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.o.textwidth = 120
 
@@ -23,6 +24,10 @@ vim.o.timeoutlen = 300
 
 -- linewrap column
 vim.o.colorcolumn = 120
+
+-- treesitter fold
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
 -- other setup
 vim.filetype.add({filename = {['Jenkinsfile'] = 'groovy'}})
