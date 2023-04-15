@@ -41,7 +41,7 @@ return {
         end
     },
     -- auto type bracket pairs
-    { 'jiangmiao/auto-pairs', event = 'BufReadPost' },
+    { 'jiangmiao/auto-pairs',     event = 'BufReadPost' },
     -- pretty print jsx
     { 'maxmellon/vim-jsx-pretty', ft = { 'javascriptreact', 'typescriptreact' } },
     -- useful methods
@@ -168,7 +168,7 @@ return {
     {
         'vim-test/vim-test',
         dependencies = { 'tpope/vim-dispatch' },
-        config = function ()
+        config = function()
             vim.cmd("let test#strategy = 'dispatch'")
         end
     },
