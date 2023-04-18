@@ -32,8 +32,11 @@ local on_attach = function(client, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre", {
             group = formattingAugrp,
             buffer = bufnr,
-            callback = function()
-                vim.lsp.buf.format()
+            callback = function(args)
+                local file = args.file
+                if not string.find(file, '.*md$') then
+                    vim.lsp.buf.format()
+                end
             end,
         })
     end
