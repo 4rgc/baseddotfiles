@@ -4,9 +4,22 @@ local map = require('util').map
 
 local getFType = function() return vim.bo.filetype end
 
+local function check(value1, value2)
+    if type(value1) == "string" then
+        return value1 == value2
+    elseif type(value1) == "table" then
+        for _, v in ipairs(value1) do
+            if v == value2 then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 function MappingWithFType(ftype, action)
     return function()
-        if getFType() == ftype
+        if check(ftype, getFType())
         then
             action()
         else
@@ -17,7 +30,7 @@ end
 
 -- map markdown preview
 map('n', '<leader>mp', MappingWithFType(
-        'markdown',
+        { 'markdown', 'telekasten' },
         function() vim.cmd('MarkdownPreviewToggle') end
     ),
     'Open Markdown Preview'
@@ -47,6 +60,9 @@ map('n', '<leader>fa', '<cmd>Telescope find_files find_command=rg,--no-ignore-vc
 map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
 map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
+map('n', '<leader>fm', '<cmd>Telescope media_files<cr>')
+map('n', '<leader>fs', '<cmd>Telescope symbols<cr>')
+map('n', '<leader>fb', '<cmd>Telescope bibtex<cr>')
 
 -- git mappings
 map('n', '<leader>gs', '<cmd>:G<CR>')
@@ -69,7 +85,7 @@ map("n", "<C-p>", "<cmd>lua require('legendary').find()<CR>", 'Open Legendary')
 
 -- Markdown mappings
 map({ 'n', 'v' }, '<C-l>', MappingWithFType('markdown', function() vim.cmd('MkdnCreateLink') end),
-'Create markdown hyperlink')
+    'Create markdown hyperlink')
 
 -- db mappings
 map('n', '<leader>du', '<Cmd>DBUIToggle<CR>', 'Toggle DB UI')
@@ -98,3 +114,19 @@ map("n", "<space>xq", "<cmd>TroubleToggle quickfix<cr>", 'Toggle trouble quickfi
 map("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", 'Toggle trouble from references',
     { silent = true, noremap = true }
 )
+
+-- Zettelkasten mappings
+-- Most used functions
+map("n", "<leader>zf", function ()
+    require('telekasten').search_notes({ with_live_grep = true })
+end, 'Find notes')
+map("n", "<leader>zg", "<cmd>Telekasten search_notes<CR>", 'Search notes')
+map("n", "<leader>zd", "<cmd>Telekasten goto_today<CR>", 'Go to today')
+map("n", "<leader>zz", "<cmd>Telekasten follow_link<CR>", 'Follow link')
+map("n", "<leader>zn", "<cmd>Telekasten new_note<CR>", 'Create new note')
+map("n", "<leader>zc", "<cmd>Telekasten show_calendar<CR>", 'Show calendar')
+map("n", "<leader>zb", "<cmd>Telekasten show_backlinks<CR>", 'Show backlinks')
+map("n", "<leader>zI", "<cmd>Telekasten insert_img_link<CR>", 'Insert image link')
+
+-- Call insert link automatically when we start typing a link
+map("i", "[[", "<cmd>Telekasten insert_link<CR>", 'Insert link')

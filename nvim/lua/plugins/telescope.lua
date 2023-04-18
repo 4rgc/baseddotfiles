@@ -6,8 +6,8 @@ return {
         config = function()
             require('telescope').setup({
                 extensions = {
-                    coc = {
-                        prefer_locations = true
+                    media_files = {
+                      find_cmd = "rg"
                     }
                 }
             })
@@ -30,5 +30,23 @@ return {
                 },
             }
         end,
+    },
+    {
+        'nvim-telescope/telescope-media-files.nvim',
+        dependencies = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
+        config = function ()
+            require('telescope').load_extension('media_files')
+        end
+    },
+    {
+        'nvim-telescope/telescope-symbols.nvim',
+        dependencies = { 'nvim-telescope/telescope.nvim' }
+    },
+    {
+        'nvim-telescope/telescope-bibtex.nvim',
+        dependencies = { 'nvim-telescope/telescope.nvim' },
+        config = function ()
+            require"telescope".load_extension("bibtex")
+        end
     }
 }

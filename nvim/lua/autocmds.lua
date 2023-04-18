@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd('BufRead,BufNewFile', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'dbout',
+    pattern = { 'dbout', '.zk.md' },
     command = 'normal zR',
-    desc = 'Expand folds in db result files',
+    desc = 'Autoexpand folds',
 })
