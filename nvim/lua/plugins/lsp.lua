@@ -142,5 +142,10 @@ return {
                 on_attach = on_attach
             }
         end
+    },
+    {
+        'numToStr/prettierrc.nvim',
+        ft = { 'javascript', 'typescript', 'javascriptreact', 'typesecriptreact', 'html', 'css', 'sass', 'less',
+            'markdown', 'telekasten', 'yaml', 'vue', 'json', 'graphql' }
     }
 }
