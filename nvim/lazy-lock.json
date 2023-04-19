@@ -40,6 +40,7 @@
   "plenary.nvim": { "branch": "master", "commit": "9ac3e9541bbabd9d73663d757e4fe48a675bb054" },
   "popup.nvim": { "branch": "master", "commit": "b7404d35d5d3548a82149238289fa71f7f6de4ac" },
   "possession.nvim": { "branch": "master", "commit": "6ae82ac3f06a60dba25275f475108a6897b4a802" },
+  "prettierrc.nvim": { "branch": "master", "commit": "5cad3e2b0f0280f84500db48be3320bd6ff7d84d" },
   "telekasten.nvim": { "branch": "main", "commit": "147f44474859ad510bd105e63eaa33bb204058c7" },
   "telescope-bibtex.nvim": { "branch": "master", "commit": "0b01f5c457f208ff2e12ce4dae89a61eec1ed69d" },
   "telescope-media-files.nvim": { "branch": "master", "commit": "0826c7a730bc4d36068f7c85cf4c5b3fd9fb570a" },

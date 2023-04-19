@@ -4,12 +4,12 @@ local map = require('util').map
 
 local getFType = function() return vim.bo.filetype end
 
-local function check(value1, value2)
-    if type(value1) == "string" then
-        return value1 == value2
-    elseif type(value1) == "table" then
-        for _, v in ipairs(value1) do
-            if v == value2 then
+local function anyStrOrStrArr(strOrStrArrValue, strValue, predicate)
+    if type(strOrStrArrValue) == "string" then
+        return predicate(strOrStrArrValue, strValue)
+    elseif type(strOrStrArrValue) == "table" then
+        for _, v in ipairs(strOrStrArrValue) do
+            if predicate(v, strValue) then
                 return true
             end
         end
@@ -19,7 +19,7 @@ end
 
 function MappingWithFType(ftype, action)
     return function()
-        if check(ftype, getFType())
+        if anyStrOrStrArr(ftype, getFType(), function(str1, str2) return str1 == str2 end)
         then
             action()
         else
@@ -117,7 +117,7 @@ map("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", 'Toggle trouble from ref
 
 -- Zettelkasten mappings
 -- Most used functions
-map("n", "<leader>zf", function ()
+map("n", "<leader>zf", function()
     require('telekasten').search_notes({ with_live_grep = true })
 end, 'Find notes')
 map("n", "<leader>zg", "<cmd>Telekasten search_notes<CR>", 'Search notes')
@@ -127,6 +127,3 @@ map("n", "<leader>zn", "<cmd>Telekasten new_note<CR>", 'Create new note')
 map("n", "<leader>zc", "<cmd>Telekasten show_calendar<CR>", 'Show calendar')
 map("n", "<leader>zb", "<cmd>Telekasten show_backlinks<CR>", 'Show backlinks')
 map("n", "<leader>zI", "<cmd>Telekasten insert_img_link<CR>", 'Insert image link')
-
--- Call insert link automatically when we start typing a link
-map("i", "[[", "<cmd>Telekasten insert_link<CR>", 'Insert link')
