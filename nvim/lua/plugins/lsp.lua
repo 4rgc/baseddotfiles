@@ -145,7 +145,7 @@ return {
     },
     {
         'numToStr/prettierrc.nvim',
-        ft = { 'javascript', 'typescript', 'javascriptreact', 'typesecriptreact', 'html', 'css', 'sass', 'less',
-            'markdown', 'telekasten', 'yaml', 'vue', 'json', 'graphql' }
+        ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'html', 'css', 'sass', 'less',
+            'markdown', 'telekasten', 'yaml', 'vue', 'json', 'graphql' },
     }
 }
