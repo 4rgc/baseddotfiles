@@ -8,6 +8,6 @@ end
 
 M.mason_servers = { 'eslint', 'lua_ls', 'tsserver', 'sqlls', 'rust_analyzer', 'pyright', 'marksman', 'jsonls', 'html',
     'graphql', 'dockerls', 'docker_compose_language_service', 'dotls', 'cucumber_language_server', 'cssls',
-    'clangd', 'cmake', 'bashls', 'yamlls', 'rubocop', 'solargraph' }
+    'clangd', 'cmake', 'bashls', 'yamlls', 'solargraph' }
 
 return M
