@@ -1,6 +1,14 @@
 package.path = package.path .. ';../?.lua'
 local map = require('util').map
 local mason_servers = require('util').mason_servers
+local mason_servers_no_version = {}
+for i, v in ipairs(mason_servers) do mason_servers_no_version[i] = v:gsub('@.*', '') end
+local non_mason_servers = {}
+local all_servers = {}
+table.move(mason_servers_no_version, 1, #mason_servers_no_version, 1, all_servers)
+
+-- Attaches any custom non-mason lsp servers with correct keybindings
+table.move(non_mason_servers, 1, #non_mason_servers, #all_servers + 1, all_servers)
 
 local formattingAugrp = vim.api.nvim_create_augroup("LspFormatting", {})
 
@@ -79,7 +87,7 @@ return {
         config = function()
             local lsp = require('lspconfig')
 
-            for _, server in ipairs(mason_servers) do
+            for _, server in ipairs(all_servers) do
                 -- Special ls setup
                 if (server == 'lua_ls') then
                     lsp.lua_ls.setup {
