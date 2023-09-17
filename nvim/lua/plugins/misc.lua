@@ -181,7 +181,10 @@ return {
         'vim-test/vim-test',
         dependencies = { 'tpope/vim-dispatch' },
         config = function()
-            vim.cmd("let test#strategy = 'dispatch'")
+            vim.cmd("let g:test#strategy = 'dispatch'")
+
+            -- Use "bundle exec ruby -Itest" as a custom executable for ruby tests
+            vim.cmd("let test#ruby#minitest#executable = 'bundle exec ruby -Itest'")
         end
     },
     {
@@ -206,4 +209,65 @@ return {
             })
         end
     },
+    {
+        'zbirenbaum/copilot.lua',
+        dependencies = { 'zbirenbaum/copilot-cmp' },
+        event = "InsertEnter",
+        cmd = 'Copilot',
+        config = function()
+            require('copilot').setup({
+                panel = {
+                    auto_refresh = false,
+                    keymap = {
+                        accept = "<CR>",
+                        jump_prev = "[[",
+                        jump_next = "]]",
+                        refresh = "gr",
+                        open = "<M-CR>",
+                    },
+                },
+                suggestion = {
+                    auto_trigger = true,
+                    keymap = {
+                        accept = "<M-l>",
+                        prev = "<M-[>",
+                        next = "<M-]>",
+                        dismiss = "<C-]>",
+                    },
+                },
+            })
+            require('copilot_cmp').setup({})
+        end
+    },
+    {
+        'powerman/vim-plugin-AnsiEsc'
+    },
+    {
+        'kevinhwang91/nvim-bqf'
+    },
+    {
+        "nvim-neotest/neotest",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim",
+            "zidhuss/neotest-minitest",
+        },
+        config = function ()
+            require('neotest').setup({
+                adapters = {
+                    require('neotest-minitest')({
+                        test_cmd = function ()
+                            return vim.tbl_flatten({
+                                'bundle',
+                                'exec',
+                                'ruby',
+                                '-Itest',
+                            })
+                        end
+                    })
+                }
+            })
+        end
+    }
 }
