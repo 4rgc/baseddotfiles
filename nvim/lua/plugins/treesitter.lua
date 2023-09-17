@@ -4,7 +4,7 @@ return {
         build = ':TSUpdate',
         config = function()
             require('nvim-treesitter.configs').setup {
-                ensure_installed = { "c", "lua", "vim", "help", "query", 'dockerfile', 'dot', 'git_rebase',
+                ensure_installed = { "c", "lua", "vim", "vimdoc", "query", 'dockerfile', 'dot', 'git_rebase',
                     'gitattributes',
                     'gitcommit', 'gitignore', 'graphql', 'html', 'javascript', 'jsdoc', 'json', 'json5', 'latex', 'lua',
                     'markdown', 'markdown_inline', 'sql', 'python', 'regex', 'ruby', 'rust', 'scss', 'tsx', 'typescript',
