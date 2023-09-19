@@ -251,7 +251,14 @@ return {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
             "antoinemadec/FixCursorHold.nvim",
-            "zidhuss/neotest-minitest",
+            "4rgc/neotest-minitest-sg",
+            "nvim-neotest/neotest-python",
+            "nvim-neotest/neotest-jest",
+            "MarkEmmons/neotest-deno",
+            "marilari88/neotest-vitest",
+            "jfpedroza/neotest-elixir",
+            "andy-bell101/neotest-java",
+            "nvim-neotest/neotest-plenary"
         },
         config = function ()
             require('neotest').setup({
