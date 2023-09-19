@@ -8,7 +8,7 @@ return {
                     'gitattributes',
                     'gitcommit', 'gitignore', 'graphql', 'html', 'javascript', 'jsdoc', 'json', 'json5', 'latex', 'lua',
                     'markdown', 'markdown_inline', 'sql', 'python', 'regex', 'ruby', 'rust', 'scss', 'tsx', 'typescript',
-                    'yaml' },
+                    'yaml', 'java' },
                 highlight = {
                     enable = true,
                     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
