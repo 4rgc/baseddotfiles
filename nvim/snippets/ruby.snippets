@@ -1,0 +1,14 @@
+snippet mtest "Minitest test case"
+  def test${1}
+    # Setup
+    ${2}
+    # Act
+		${3}
+    # Assert
+    ${4}
+  end
+
+snippet msuite "Minitest test suite"
+	class ${1}Test < ActiveSupport::TestCase
+		${2}
+	end
