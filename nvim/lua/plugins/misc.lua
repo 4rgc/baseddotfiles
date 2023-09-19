@@ -272,7 +272,16 @@ return {
                                 '-Itest',
                             })
                         end
-                    })
+                    }),
+                    require('neotest-python')({}),
+                    require('neotest-jest')({
+                        jestCommand = "npm test --"
+                    }),
+                    require('neotest-deno')({}),
+                    require('neotest-vitest')({}),
+                    require('neotest-elixir')({}),
+                    require('neotest-java')({}),
+                    require('neotest-plenary')({}),
                 }
             })
         end
