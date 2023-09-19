@@ -127,3 +127,12 @@ map("n", "<leader>zn", "<cmd>Telekasten new_note<CR>", 'Create new note')
 map("n", "<leader>zc", "<cmd>Telekasten show_calendar<CR>", 'Show calendar')
 map("n", "<leader>zb", "<cmd>Telekasten show_backlinks<CR>", 'Show backlinks')
 map("n", "<leader>zI", "<cmd>Telekasten insert_img_link<CR>", 'Insert image link')
+
+-- Neotest mappings
+map("n", "<space>tt", "<cmd>Neotest run<CR>", 'Test nearest')
+map("n", "<space>tf", "<cmd>Neotest run file<CR>", 'Test file')
+map("n", "<space>to", "<cmd>Neotest output<CR>", 'View test output')
+map("n", "<space>ts", "<cmd>Neotest summary<CR>", 'Toggle test summary')
+map("n", "<space>tj", "<cmd>Neotest jump next<CR>", 'Jump to next test')
+map("n", "<space>tk", "<cmd>Neotest jump prev<CR>", 'Jump to previous test')
+
