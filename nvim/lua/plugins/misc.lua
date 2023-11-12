@@ -11,6 +11,7 @@ return {
           delete = 'SDelete',
           list = 'SList',
         },
+<<<<<<< HEAD
         plugins = {
           delete_hidden_buffers = {
             hooks = {
@@ -160,4 +161,32 @@ return {
       require('baleia').setup()
     end
   }
+=======
+        config = function ()
+            require('neotest').setup({
+                adapters = {
+                    require('neotest-minitest')({
+                        test_cmd = function ()
+                            return vim.tbl_flatten({
+                                'bundle',
+                                'exec',
+                                'ruby',
+                                '-Itest',
+                            })
+                        end
+                    }),
+                    require('neotest-python')({}),
+                    require('neotest-jest')({
+                        jestCommand = "npm test --"
+                    }),
+                    require('neotest-deno')({}),
+                    require('neotest-vitest')({}),
+                    require('neotest-elixir')({}),
+                    require('neotest-java')({}),
+                    require('neotest-plenary')({}),
+                }
+            })
+        end
+    }
+>>>>>>> d54181753525933c6adff0785cd8fe1f04cf7db9
 }
