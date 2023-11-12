@@ -83,7 +83,16 @@ return {
                 '-Itest',
               })
             end
-          })
+          }),
+          require('neotest-python')({}),
+          require('neotest-jest')({
+            jestCommand = "npm test --"
+          }),
+          require('neotest-deno')({}),
+          require('neotest-vitest')({}),
+          require('neotest-elixir')({}),
+          require('neotest-java')({}),
+          require('neotest-plenary')({}),
         }
       })
     end
@@ -163,27 +172,27 @@ return {
       require('trouble').setup {}
     end
   },
-    {
-      -- highlight todo comments
-        'folke/todo-comments.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' },
-        config = function()
-            require('todo-comments').setup {}
-        end,
-        opts = {}
-    },
-    {
-      -- highlight hex/rgb/hsl colors
-        'brenoprata10/nvim-highlight-colors',
-        event = 'BufReadPre',
-        config = function()
-            require('nvim-highlight-colors').setup {
-                enable_tailwind = true
-            }
-        end
-    },
-    {
-      -- improve quickfix ui
-        'kevinhwang91/nvim-bqf'
-    },
+  {
+    -- highlight todo comments
+    'folke/todo-comments.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('todo-comments').setup {}
+    end,
+    opts = {}
+  },
+  {
+    -- highlight hex/rgb/hsl colors
+    'brenoprata10/nvim-highlight-colors',
+    event = 'BufReadPre',
+    config = function()
+      require('nvim-highlight-colors').setup {
+        enable_tailwind = true
+      }
+    end
+  },
+  {
+    -- improve quickfix ui
+    'kevinhwang91/nvim-bqf'
+  },
 }

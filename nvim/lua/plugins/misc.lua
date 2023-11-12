@@ -11,14 +11,13 @@ return {
           delete = 'SDelete',
           list = 'SList',
         },
-<<<<<<< HEAD
         plugins = {
           delete_hidden_buffers = {
             hooks = {
               'before_load',
               not vim.o.sessionoptions:match('buffer') and 'before_save',
             },
-            force = false,             -- or fun(buf): boolean
+            force = false, -- or fun(buf): boolean
           }
         },
       }
@@ -108,12 +107,12 @@ return {
     config = function()
       local home = vim.fn.expand("~/zk/zettels")
       require('telekasten').setup({
-        home = home,         -- Put the name of your notes directory here
+        home = home, -- Put the name of your notes directory here
         take_over_my_home = true,
         auto_set_filetype = false,
         new_note_filename = 'uuid',
         uuid_type = "%Y%m%d%H%M",
-        extension = '.md',         -- differentiate between markdown files and Zettelkasten files
+        extension = '.md', -- differentiate between markdown files and Zettelkasten files
         template_new_note = home .. '/' .. 'templates/new_note.zkt.md',
         template_new_daily = home .. '/' .. 'templates/daily.zkt.md',
         template_new_weekly = home .. '/' .. 'templates/weekly.zkt.md',
@@ -161,32 +160,4 @@ return {
       require('baleia').setup()
     end
   }
-=======
-        config = function ()
-            require('neotest').setup({
-                adapters = {
-                    require('neotest-minitest')({
-                        test_cmd = function ()
-                            return vim.tbl_flatten({
-                                'bundle',
-                                'exec',
-                                'ruby',
-                                '-Itest',
-                            })
-                        end
-                    }),
-                    require('neotest-python')({}),
-                    require('neotest-jest')({
-                        jestCommand = "npm test --"
-                    }),
-                    require('neotest-deno')({}),
-                    require('neotest-vitest')({}),
-                    require('neotest-elixir')({}),
-                    require('neotest-java')({}),
-                    require('neotest-plenary')({}),
-                }
-            })
-        end
-    }
->>>>>>> d54181753525933c6adff0785cd8fe1f04cf7db9
 }
