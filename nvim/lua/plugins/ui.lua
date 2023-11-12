@@ -100,28 +100,45 @@ return {
   {
     -- Indentation coloring
     'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
     event = 'BufReadPre',
     config = function()
-      vim.cmd [[highlight IndentBlanklineIndent1 guibg=#2E2314 gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent2 guibg=#292B1C gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent3 guibg=#232B1E gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent4 guibg=#202A24 gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent5 guibg=#2A2327 gui=nocombine]]
+      local hooks = require "ibl.hooks"
+      -- create the highlight groups in the highlight setup hook, so they are reset
+      -- every time the colorscheme changes
+      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+        vim.api.nvim_set_hl(0, "IblWhitespace1", { bg = "#2E2314", nocombine = true })
+        vim.api.nvim_set_hl(0, "IblWhitespace2", { bg = "#292B1C", nocombine = true })
+        vim.api.nvim_set_hl(0, "IblWhitespace3", { bg = "#232B1E", nocombine = true })
+        vim.api.nvim_set_hl(0, "IblWhitespace4", { bg = "#202A24", nocombine = true })
+        vim.api.nvim_set_hl(0, "IblWhitespace5", { bg = "#2A2327", nocombine = true })
+        vim.api.nvim_set_hl(0, "IblIndent1", { fg = "#c81e54" })
+        vim.api.nvim_set_hl(0, "IblIndent2", { fg = "#baac2c" })
+        vim.api.nvim_set_hl(0, "IblIndent3", { fg = "#8fbe27" })
+        vim.api.nvim_set_hl(0, "IblIndent4", { fg = "#2f99b6" })
+        vim.api.nvim_set_hl(0, "IblIndent5", { fg = "#8a5bf1" })
+      end)
       vim.opt.list = true
       vim.opt.listchars:append "space:⋅"
-      require('indent_blankline').setup {
-        space_char_blankline = " ",
-        space_char_highlight_list = {
-          'IndentBlanklineIndent1',
-          'IndentBlanklineIndent2',
-          'IndentBlanklineIndent3',
-          'IndentBlanklineIndent4',
-          'IndentBlanklineIndent5'
+      require("ibl").setup {
+        whitespace = {
+          highlight = {
+            'IblWhitespace1',
+            'IblWhitespace2',
+            'IblWhitespace3',
+            'IblWhitespace4',
+            'IblWhitespace5'
+          },
         },
-        context_char = '▎',
-        show_trailing_blankline_indent = false,
-        show_current_context = true,
-        show_current_context_start = true,
+        scope = {
+          highlight = {
+            'IblIndent1',
+            'IblIndent2',
+            'IblIndent3',
+            'IblIndent4',
+            'IblIndent5'
+          },
+        }
       }
     end
   },
