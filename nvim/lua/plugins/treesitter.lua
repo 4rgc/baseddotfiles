@@ -81,8 +81,8 @@ return {
                         border = 'none',
                         floating_preview_opts = {},
                         peek_definition_code = {
-                            ["<leader>df"] = "@function.outer",
-                            ["<leader>dF"] = "@class.outer",
+                            ["<leader>dm"] = "@function.outer",
+                            ["<leader>dM"] = "@class.outer",
                         },
                     },
                 },
