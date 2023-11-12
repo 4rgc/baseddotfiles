@@ -131,6 +131,7 @@ return {
           },
         },
         scope = {
+          char = '▎',
           highlight = {
             'IblIndent1',
             'IblIndent2',
@@ -138,6 +139,10 @@ return {
             'IblIndent4',
             'IblIndent5'
           },
+        },
+        indent = {
+            char = '│',
+            tab_char = '│'
         }
       }
     end
