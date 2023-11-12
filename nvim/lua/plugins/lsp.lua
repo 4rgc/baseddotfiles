@@ -52,7 +52,8 @@ end
 
 return {
     { 'SmiteshP/nvim-navic', dependencies = { 'neovim/nvim-lspconfig' } },
-    {
+    -- TODO: make this work
+    --[[ {
         'ray-x/lsp_signature.nvim',
         config = function()
             local lsp_signature_cfg = {
@@ -65,7 +66,7 @@ return {
             }
             require('lsp_signature').setup(lsp_signature_cfg)
         end
-    },
+    }, ]]
     {
         'williamboman/mason.nvim',
         config = function()
