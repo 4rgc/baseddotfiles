@@ -8,7 +8,9 @@ return {
             close_on_exit = true,
         },
         config = function()
-            require('toggleterm').setup {}
+            require('toggleterm').setup {
+                open_mapping = [[<c-\>]]
+            }
         end
     }
 }

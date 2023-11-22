@@ -163,3 +163,6 @@ end, 'Scopes')
 map('n', '<leader>dt', function()
     require('dapui').toggle()
 end, 'Variables')
+
+-- Toggleterm mappings
+map('t', '<Esc>', '<C-\\><C-n>', 'Exit terminal mode')
