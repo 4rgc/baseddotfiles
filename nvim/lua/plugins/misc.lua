@@ -52,7 +52,11 @@ return {
     end
   },
   -- auto type bracket pairs
-  { 'jiangmiao/auto-pairs', event = 'BufReadPost' },
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {}     -- this is equalent to setup({}) function
+  },
   -- useful methods
   'nvim-lua/plenary.nvim',
   -- surround chunks of text/code with brackets/tags/quotes
