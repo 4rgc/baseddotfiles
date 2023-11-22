@@ -24,6 +24,10 @@ return {
         }
       })
 
+      -- the plugin hides the bottom cmdline, so we show the partial command in the statusline
+      vim.opt.showcmdloc = 'statusline'
+
+      -- create a custom git commit command and redirect the output with noice
       vim.api.nvim_create_user_command(
         'Gc',
         function(opts)
@@ -155,6 +159,8 @@ return {
     config = function()
       -- needed because somehow the automatic setup doesn't work
       require('ofirkai').setup {}
+      -- set the colorcolumn after the theme is loaded
+      vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#171712" })
     end
   },
   -- colorful brackets
