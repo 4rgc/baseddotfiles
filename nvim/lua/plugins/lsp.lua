@@ -4,6 +4,14 @@ local mason_servers = require('util').mason_servers
 local mason_servers_no_version = {}
 for i, v in ipairs(mason_servers) do mason_servers_no_version[i] = v:gsub('@.*', '') end
 local non_mason_servers = {}
+
+-- Check if we have solargraph installed, use it if we do
+if vim.fn.executable('solargraph') == 1 then
+    table.insert(non_mason_servers, 'solargraph')
+else
+    table.insert(mason_servers_no_version, 'solargraph')
+end
+
 local all_servers = {}
 table.move(mason_servers_no_version, 1, #mason_servers_no_version, 1, all_servers)
 
