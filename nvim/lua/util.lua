@@ -6,7 +6,14 @@ M.map = function(mode, lhs, rhs, desc, opts)
     vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-M.mason_servers = { 'eslint', 'lua_ls', 'tsserver', 'sqlls', 'rust_analyzer', 'pyright', 'marksman', 'jsonls', 'html',
+M.read_exec_path = function(exec_name)
+    local handle = io.popen("which " .. exec_name)
+    local result = handle:read("*a"):gsub("\n", "")
+    handle:close()
+    return result
+end
+
+M.mason_servers = { 'eslint', 'lua_ls', 'tsserver', 'sqlls', 'rust_analyzer', 'marksman', 'jsonls', 'html',
     'graphql', 'dockerls', 'docker_compose_language_service', 'dotls', 'cucumber_language_server', 'cssls',
     'clangd', 'cmake', 'bashls', 'yamlls' }
 

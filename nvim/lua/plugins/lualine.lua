@@ -34,14 +34,17 @@ return {
                     'filename',
                     icon = '',
                     color = ofirkai_lualine.winbar_color,
-                    padding = { left = 4 }
+                    padding = { left = 4 },
                 },
             },
             lualine_c = {
                 {
-                    navic.get_location,
-                    icon = "",
-                    cond = navic.is_available,
+                    function()
+                        return ( navic.get_location() ~= "" and " " or "" ) .. navic.get_location()
+                    end,
+                    cond = function()
+                        return navic.is_available()
+                    end,
                     color = ofirkai_lualine.winbar_color,
                 },
             },
@@ -55,7 +58,7 @@ return {
                 icons_enabled = true,
                 theme = require('ofirkai.statuslines.lualine').theme,
                 disabled_filetypes = { -- Recommended filetypes to disable winbar
-                    winbar = { 'gitcommit', 'NvimTree', 'toggleterm', 'fugitive' },
+                    winbar = { 'gitcommit', 'NvimTree', 'toggleterm', 'fugitive', 'dapui_console', 'dap-repl', 'dapui_scopes', 'dapui_breakpoints', 'dapui_stacks', 'dapui_watches' },
                 },
             },
             winbar = winbar,
