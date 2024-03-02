@@ -3,7 +3,7 @@ local map = require('util').map
 local mason_servers = require('util').mason_servers
 local mason_servers_no_version = {}
 for i, v in ipairs(mason_servers) do mason_servers_no_version[i] = v:gsub('@.*', '') end
-local non_mason_servers = {}
+local non_mason_servers = { 'pylsp' }
 
 -- Check if we have solargraph installed, use it if we do
 if vim.fn.executable('solargraph') == 1 then
@@ -30,6 +30,7 @@ local on_attach = function(client, bufnr)
     map('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration', bufopts)
     map('n', 'gd', vim.lsp.buf.definition, 'Go to definition', bufopts)
     map('n', 'K', vim.lsp.buf.hover, 'Show documentation', bufopts)
+    map('n', 'J', vim.diagnostic.open_float, 'Show diagnostics', bufopts)
     map('n', 'gi', vim.lsp.buf.implementation, 'Go to implementation', bufopts)
     map('n', '<C-k>', vim.lsp.buf.signature_help, 'Show signature', bufopts)
     map('n', '<space>wa', vim.lsp.buf.add_workspace_folder, 'Add workspace folder', bufopts)
@@ -95,6 +96,7 @@ return {
         dependencies = { 'williamboman/mason-lspconfig.nvim' },
         config = function()
             local lsp = require('lspconfig')
+            local util = require('lspconfig.util')
 
             for _, server in ipairs(all_servers) do
                 -- Special ls setup
@@ -126,6 +128,51 @@ return {
                             on_attach(client, bufnr)
                         end
                     }
+                elseif (server == 'pylsp') then
+                    lsp.pylsp.setup {
+                        cmd = { "pylsp" --[[ , "-v"  ]] },
+                        root_dir = function(fname)
+                            local root_files = {
+                                'pyproject.toml',
+                                'setup.py',
+                                'setup.cfg',
+                                'requirements.txt',
+                                'Pipfile',
+                                '.pylintrc',
+                                '.flake8',
+                            }
+                            return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+                        end,
+                        settings = {
+                            pylsp = {
+                                configurationSources = { "flake8" },
+                                plugins = {
+                                    pylint = {
+                                        -- enable if ruff isn't good enough
+                                        enabled = false,
+                                    },
+                                    pyflakes = { enabled = false },
+                                    pycodestyle = { enabled = false },
+                                    pydocstyle = { enabled = true },
+                                    mccabe = { enabled = true },
+                                    flake8 = {
+                                        enabled = true,
+                                    },
+                                    autopep8 = { enabled = false },
+                                    yapf = { enabled = false },
+                                    pylsp_black = { enabled = true },
+                                    pylsp_mypy = { enabled = true },
+                                    ruff = { enabled = true }
+                                },
+                            }
+                        },
+                        on_attach = function(client, bufnr)
+                            require('nvim-navic').attach(client, bufnr)
+                            on_attach(client, bufnr)
+                        end
+                    }
+                elseif (server == 'tsserver') then
+                    -- noop, delegate to typescript-tools.nvim
 
                     -- General ls setup
                 else
@@ -149,13 +196,7 @@ return {
                 sources = {
                     null_ls.builtins.completion.spell,
                     null_ls.builtins.diagnostics.npm_groovy_lint,
-                    null_ls.builtins.diagnostics.pylint,
-                    null_ls.builtins.formatting.isort.with({
-                        extra_args = { "--line-length=120" }
-                    }),
-                    null_ls.builtins.formatting.black,
                     null_ls.builtins.formatting.prettier,
-                    null_ls.builtins.diagnostics.ruff,
                 },
                 on_attach = on_attach
             }
@@ -194,4 +235,20 @@ return {
             )
         end,
     },
+    {
+        "pmizio/typescript-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        config = function()
+            require("typescript-tools").setup {
+                on_attach = function (client, bufnr)
+                    require('nvim-navic').attach(client, bufnr)
+                    on_attach(client, bufnr)
+                end,
+                settings = {
+                    expose_as_code_action = "all"
+                }
+            }
+        end,
+        opts = {},
+    }
 }
