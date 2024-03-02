@@ -2,11 +2,13 @@ return {
     {
         'mfussenegger/nvim-dap',
         dependencies = {
-            'suketa/nvim-dap-ruby'
+            'suketa/nvim-dap-ruby',
+            'mfussenegger/nvim-dap-python',
         },
         config = function()
             vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
             require('dap-ruby').setup()
+            require('dap-python').setup('~/.pyenv/shims/python')
             local dap = require('dap')
             table.insert(
                 dap.configurations.ruby,
@@ -32,8 +34,26 @@ return {
                     type = 'ruby',
                     request = 'attach',
                     name = 'Run current test file',
-                    command = "test_launcher",
+                    command = "ruby",
                     bundle = "bundle",
+                    script = "-Itest ${file}",
+                    port = 38698,
+                    server = "127.0.0.1",
+                    options = {
+                        source_filetype = "ruby",
+                    },
+                    localfs = true,
+                    waiting = 5000,
+                }
+            )
+            table.insert(
+                dap.configurations.ruby,
+                {
+                    type = 'ruby',
+                    request = 'attach',
+                    name = 'Run current test file (non-bundle test)',
+                    command = "bundle exec test_launcher",
+                    bundle = "",
                     script = "${file}",
                     port = 38698,
                     server = "127.0.0.1",
@@ -41,7 +61,7 @@ return {
                         source_filetype = "ruby",
                     },
                     localfs = true,
-                    waiting = 15000,
+                    waiting = 500,
                 }
             )
             table.insert(
