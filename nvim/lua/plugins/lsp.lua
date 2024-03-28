@@ -5,6 +5,14 @@ local mason_servers_no_version = {}
 for i, v in ipairs(mason_servers) do mason_servers_no_version[i] = v:gsub('@.*', '') end
 local non_mason_servers = { 'pylsp' }
 
+-- Check if we have all non-mason servers installed
+for _, server in ipairs(non_mason_servers) do
+    if vim.fn.executable(server) == 0 then
+        error('Non-mason server ' .. server .. ' not found, skipping')
+        table.remove(non_mason_servers, table.getn())
+    end
+end
+
 -- Check if we have solargraph installed, use it if we do
 if vim.fn.executable('solargraph') == 1 then
     table.insert(non_mason_servers, 'solargraph')
@@ -162,7 +170,8 @@ return {
                                     yapf = { enabled = false },
                                     pylsp_black = { enabled = true },
                                     pylsp_mypy = { enabled = true },
-                                    ruff = { enabled = true }
+                                    ruff = { enabled = true },
+                                    rope_autoimport = { enabled = true },
                                 },
                             }
                         },
