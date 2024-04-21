@@ -54,6 +54,15 @@ map('n', '<leader>8', '<Cmd>BufferLineGoToBuffer 8<CR>')
 map('n', '<leader>9', '<Cmd>BufferLineGoToBuffer 9<CR>')
 map('n', '<leader>$', '<Cmd>BufferLineGoToBuffer -1<CR>')
 
+-- map line moving
+local moveLineOpts = { noremap = true, silent = true }
+map('n', '<A-j>', ':m .+1<cr>==', 'Move line down', moveLineOpts)
+map('n', '<A-k>', ':m .-2<cr>==', 'Move line up', moveLineOpts)
+map('i', '<A-j>', '<esc>:m .+1<cr>==gi', 'Move line down', moveLineOpts)
+map('i', '<A-k>', '<esc>:m .-2<cr>==gi', 'Move line up', moveLineOpts)
+map('v', '<A-j>', ":m '>+1<cr>gv=gv", 'Move line down', moveLineOpts)
+map('v', '<A-k>', ":m '<-2<cr>gv=gv", 'Move line up', moveLineOpts)
+
 -- Telescope mappings
 map('n', '<leader>ff', '<cmd>Telescope git_files<cr>')
 map('n', '<leader>fa', '<cmd>Telescope find_files find_command=rg,--no-ignore-vcs,--hidden,--files<cr>')
