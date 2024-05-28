@@ -14,7 +14,6 @@ M.read_exec_path = function(exec_name)
 end
 
 M.mason_servers = { 'eslint', 'lua_ls', 'tsserver', 'sqlls', 'rust_analyzer', 'marksman', 'jsonls', 'html',
-    'graphql', 'dockerls', 'docker_compose_language_service', 'dotls', 'cucumber_language_server', 'cssls',
-    'clangd', 'cmake', 'bashls', 'yamlls' }
+    'graphql', 'dockerls', 'docker_compose_language_service', 'dotls', }
 
 return M
