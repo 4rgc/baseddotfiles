@@ -4,11 +4,17 @@ return {
         dependencies = {
             'suketa/nvim-dap-ruby',
             'mfussenegger/nvim-dap-python',
+            'mxsdev/nvim-dap-vscode-js',
+            'nvim-neotest/nvim-nio'
         },
         config = function()
             vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
             require('dap-ruby').setup()
             require('dap-python').setup('~/.pyenv/shims/python')
+            require('dap-vscode-js').setup({
+                debugger_path = "/Users/bohda/Projects/vscode-js-debug",                                   -- Path to vscode-js-debug installation.
+                adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
+            })
             local dap = require('dap')
             table.insert(
                 dap.configurations.ruby,
@@ -83,6 +89,26 @@ return {
                     current_line = true
                 }
             )
+            for _, language in ipairs({ 'javascript', 'typescript' }) do
+                dap.configurations[language] = {
+                    {
+                        type = "pwa-node",
+                        request = "launch",
+                        name = "Launch file",
+                        program = "${file}",
+                        cwd = "${workspaceFolder}",
+                    },
+                    {
+                        type = "pwa-node",
+                        request = "attach",
+                        name = "Attach",
+                        processId = require 'dap.utils'.pick_process,
+                        cwd = "${workspaceFolder}",
+                        skipFiles = { "**/node_modules/**" },
+                        trace = true
+                    }
+                }
+            end
         end
     },
     {
@@ -94,13 +120,13 @@ return {
             require('dapui').setup()
             local dap, dapui = require("dap"), require("dapui")
             dap.listeners.after.event_initialized["dapui_config"] = function()
-              dapui.open()
+                dapui.open()
             end
             dap.listeners.before.event_terminated["dapui_config"] = function()
-              dapui.close()
+                dapui.close()
             end
             dap.listeners.before.event_exited["dapui_config"] = function()
-              dapui.close()
+                dapui.close()
             end
         end
     }
