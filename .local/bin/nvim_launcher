@@ -1,0 +1,113 @@
+#!/usr/bin/env zsh
+# This script is used to rebuild Neovim if the last build was more than 7 days ago.
+
+# Check script location (has to be /Users/*user*/.local/bin/ for macOS)
+if ! [[ $0 == "/Users/"*"/.local/bin/nvim_launcher" ]]; then
+    echo "Please run this script from the .local/bin directory."
+    exit 1
+fi
+
+NEOVIM_REPO_PATH=$(dirname $0)/../../.neovim
+LAST_BUILD_DATE_FILEPATH=$(dirname $0)/../share/nvim/.last_build_date
+
+if [ -f $LAST_BUILD_DATE_FILEPATH ] ; then
+    LAST_BUILD_DATE=$(cat $LAST_BUILD_DATE_FILEPATH)
+else
+    touch $LAST_BUILD_DATE_FILEPATH
+fi
+
+# Verify that xcode-utils and brew are installed, and the following brew packages are installed: ninja cmake gettext curl
+check_and_install_dependencies() {
+    # Check for xcode-utils
+    if ! xcode-select --print-path > /dev/null 2>&1; then
+        echo "xcode-utils is not installed. Installing..."
+        xcode-select --install
+    else
+        echo "xcode-utils is installed."
+    fi
+
+    # Check for brew
+    command -v brew >/dev/null 2>&1 || { echo >&2 "Brew not found. Please install it and run this script again."; exit 1; }
+    echo "Brew is installed."
+
+    # Check for nvim dependencies
+    nvim_deps=("ninja" "cmake" "gettext" "curl")
+    missing_deps=()
+    for package in "${nvim_deps[@]}"
+    do
+        if command -v $package > /dev/null; then
+            echo "$package is installed."
+        else
+            echo "$package is not installed."
+            missing_deps+=($package)
+        fi
+    done
+    if [ ${#missing_deps[@]} -ne 0 ]; then
+        echo "Installing missing dependencies..."
+        brew install ${missing_deps[@]}
+    fi
+}
+
+check_if_exists_or_clone_neovim_repo() {
+    if [ -d $NEOVIM_REPO_PATH/.git ]; then
+        # noop, repo exists
+    else
+        mkdir -p $NEOVIM_REPO_PATH
+        git clone https://github.com/neovim/neovim $NEOVIM_REPO_PATH
+    fi
+}
+
+# Rebuild function
+rebuild_neovim() {
+    echo "Rebuilding Neovim..."
+    cd $NEOVIM_REPO_PATH
+    git pull
+    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    echo "Please enter your sudo password to install Neovim."
+    if sudo make install ; then
+        echo "Neovim was successfully rebuilt"
+    else
+        echo "Error when rebuilding Neovim. Please check the logs."
+    fi
+    cd -
+    # Save UTC date to file
+    date +%s > $LAST_BUILD_DATE_FILEPATH
+}
+
+neovim_args=("$@")
+force_rebuild=false
+
+# Check for forced rebuild flag
+if [ "$1" = "--rebuild" ]; then
+    force_rebuild=true
+    neovim_args=("${@:2}")
+fi
+
+# Check if LAST_BUILD_DATE is empty or force_rebuild is set
+if [ -z $LAST_BUILD_DATE ] || [ $force_rebuild = true ]; then
+    echo "Last build date file not found. Building Neovim for the first time."
+    check_and_install_dependencies
+    check_if_exists_or_clone_neovim_repo
+    rebuild_neovim
+else
+    # Check if the last build was more than 7 days ago
+    if [ $(($(date +%s) - $LAST_BUILD_DATE)) -gt 604800 ]; then
+        while true; do
+            read "yn?The last build was more than 7 days ago. Do you want to rebuild Neovim? [y/n] "
+            case ${yn:-Y} in
+                [Yy]* ) check_and_install_dependencies; check_if_exists_or_clone_neovim_repo; rebuild_neovim; break;;
+                [Nn]* ) break;;
+                * ) echo "Please answer yes or no.";;
+            esac
+        done
+        check_and_install_dependencies
+        check_if_exists_or_clone_neovim_repo
+        rebuild_neovim
+    fi
+fi
+
+if [ "$1" = "--skip-launch" ]; then
+   exit 0
+fi
+
+trap "/usr/local/bin/nvim ${neovim_args[@]}" 0
