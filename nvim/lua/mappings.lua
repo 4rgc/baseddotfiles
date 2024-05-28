@@ -28,6 +28,17 @@ function MappingWithFType(ftype, action)
     end
 end
 
+-- clipboard copy/paste
+local copyPasteOpts = { noremap = true, silent = true }
+map('n', '<leader>y', '"+y', 'Copy to clipboard', copyPasteOpts)
+map('n', '<leader>Y', '"+yg_', 'Copy to clipboard until end of line', copyPasteOpts)
+map('v', '<leader>y', '"+y', 'Copy to clipboard', copyPasteOpts)
+
+map('n', '<leader>p', '"+p', 'Paste from clipboard', copyPasteOpts)
+map('n', '<leader>P', '"+P', 'Paste from clipboard before cursor', copyPasteOpts)
+map('v', '<leader>p', '"+p', 'Paste from clipboard', copyPasteOpts)
+map('v', '<leader>P', '"+P', 'Paste from clipboard before cursor', copyPasteOpts)
+
 -- map markdown preview
 map('n', '<leader>mp', MappingWithFType(
         { 'markdown', 'telekasten' },
