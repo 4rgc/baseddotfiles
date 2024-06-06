@@ -66,7 +66,6 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
-      "zidhuss/neotest-minitest",
       "nvim-neotest/neotest-python",
       "nvim-neotest/neotest-jest",
       "MarkEmmons/neotest-deno",
@@ -78,16 +77,6 @@ return {
     config = function()
       require('neotest').setup({
         adapters = {
-          require('neotest-minitest')({
-            test_cmd = function()
-              return vim.tbl_flatten({
-                'bundle',
-                'exec',
-                'ruby',
-                '-Itest',
-              })
-            end
-          }),
           require('neotest-python')({}),
           require('neotest-jest')({
             jestCommand = "npm test --"
