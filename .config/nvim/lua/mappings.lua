@@ -115,26 +115,6 @@ map('n', '<leader>dl', '<Cmd>DBUILastQueryInfo<CR>', 'Last query info')
 -- code_runner mappings
 map('n', '<F7>', '<Cmd>RunCode<CR>', 'Run current file')
 
--- Trouble mappings
-map("n", "<space>xx", "<cmd>TroubleToggle<cr>", 'Toggle trouble',
-    { silent = true, noremap = true }
-)
-map("n", "<space>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", 'Toggle trouble from workspace diagnostics',
-    { silent = true, noremap = true }
-)
-map("n", "<space>xd", "<cmd>TroubleToggle document_diagnostics<cr>", 'Toggle trouble from document diagnostics',
-    { silent = true, noremap = true }
-)
-map("n", "<space>xl", "<cmd>TroubleToggle loclist<cr>", 'Toggle trouble from loclist',
-    { silent = true, noremap = true }
-)
-map("n", "<space>xq", "<cmd>TroubleToggle quickfix<cr>", 'Toggle trouble quickfix items',
-    { silent = true, noremap = true }
-)
-map("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", 'Toggle trouble from references',
-    { silent = true, noremap = true }
-)
-
 -- Zettelkasten mappings
 -- Most used functions
 map("n", "<leader>zf", function()
