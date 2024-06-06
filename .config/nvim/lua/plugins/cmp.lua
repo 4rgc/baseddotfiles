@@ -17,6 +17,13 @@ return {
             'neovim/nvim-lspconfig',
             'L3MON4D3/LuaSnip'
         },
+        opts = function(_, opts)
+            opts.sources = opts.sources or {}
+            table.insert(opts.sources, {
+                name = "lazydev",
+                group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+            })
+        end,
         config = function()
             local has_words_before = function()
                 unpack = unpack or table.unpack

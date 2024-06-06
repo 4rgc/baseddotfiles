@@ -106,6 +106,17 @@ return {
         end
     },
     {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "luvit-meta/library", words = { "vim%.uv" } },
+            },
+        },
+    },
+    {
         'neovim/nvim-lspconfig',
         dependencies = { 'williamboman/mason-lspconfig.nvim' },
         config = function()
@@ -255,7 +266,7 @@ return {
         dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
         config = function()
             require("typescript-tools").setup {
-                on_attach = function (client, bufnr)
+                on_attach = function(client, bufnr)
                     require('nvim-navic').attach(client, bufnr)
                     on_attach(client, bufnr)
                 end,
