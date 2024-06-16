@@ -25,24 +25,24 @@ if [ -f ~/.zshrc ]; then
     sed -i '' "s/DOTFILES=$/DOTFILES=$( echo ${${0:a:h}:gs/\//\\\//} )/" .zshrc
 fi
 
-if command -v nvim; then
-    echo "${RED}Neovim is already installed. Cannot build and install from source.${RESET}"
-else
-    read "yn?Neovim is not installed. Build and install it from source? [y/n] "
-    if [[ $yn == "y" ]]; then
-        $SCRIPTS/nvim_launcher --skip-launch
-    fi
-fi
-
-# Install the nerdfont
-brew install --cask font-meslo-lg-nerd-font
-
 stow .
+
+source ~/.zshrc
 
 if ! command -v omz &> /dev/null; then
     echo "Oh My Zsh is not installed. Installing now..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 
-source ~/.zshrc
+if command -v nvim; then
+    echo "${RED}Neovim is already installed. Cannot build and install from source.${RESET}"
+else
+    read "yn?Neovim is not installed. Build and install it from source? [y/n] "
+    if [[ $yn == "y" ]]; then
+        ~/.local/bin/nvim_launcher --skip-launch
+    fi
+fi
+
+# Install the nerdfont
+brew install --cask font-meslo-lg-nerd-font
 
