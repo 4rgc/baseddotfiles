@@ -8,7 +8,7 @@ if ! [[ $0 == "/Users/"*"/.local/bin/nvim_launcher" ]]; then
 fi
 
 NEOVIM_REPO_PATH=$(dirname $0)/../../.neovim
-LAST_BUILD_DATE_FILEPATH=$(dirname $0)/../share/nvim/.last_build_date
+LAST_BUILD_DATE_FILEPATH=~/.local/share/nvim/.last_build_date
 
 if [ -f $LAST_BUILD_DATE_FILEPATH ] ; then
     LAST_BUILD_DATE=$(cat $LAST_BUILD_DATE_FILEPATH)
