@@ -35,7 +35,7 @@ return {
         },
         bib = {
           find_in_root = true,
-          default_path = 'ref.bib'
+          default_path = 'bibliography.bib'
         },
         yaml = {
           bib = { override = true }
@@ -55,7 +55,7 @@ return {
   {
     'windwp/nvim-autopairs',
     event = "InsertEnter",
-    opts = {}     -- this is equalent to setup({}) function
+    opts = {} -- this is equalent to setup({}) function
   },
   -- useful methods
   'nvim-lua/plenary.nvim',
