@@ -62,10 +62,14 @@ rebuild_neovim() {
     echo "Rebuilding Neovim..."
     cd $NEOVIM_REPO_PATH
     git pull
-    make CMAKE_BUILD_TYPE=RelWithDebInfo
     echo "Please enter your sudo password to install Neovim."
+    if sudo make CMAKE_BUILD_TYPE=RelWithDebInfo ; then
+        echo "Neovim was successfully built"
+    else
+        echo "Error when building Neovim. Please check the logs."
+    fi
     if sudo make install ; then
-        echo "Neovim was successfully rebuilt"
+        echo "New Neovim build was successfully installed."
     else
         echo "Error when rebuilding Neovim. Please check the logs."
     fi
@@ -89,13 +93,14 @@ if [ -z $LAST_BUILD_DATE ] || [ $force_rebuild = true ]; then
     check_and_install_dependencies
     check_if_exists_or_clone_neovim_repo
     rebuild_neovim
+    sleep 3
 else
     # Check if the last build was more than 7 days ago
     if [ $(($(date +%s) - $LAST_BUILD_DATE)) -gt 604800 ]; then
         while true; do
             read "yn?The last build was more than 7 days ago. Do you want to rebuild Neovim? [y/n] "
             case ${yn:-Y} in
-                [Yy]* ) check_and_install_dependencies; check_if_exists_or_clone_neovim_repo; rebuild_neovim; break;;
+                [Yy]* ) check_and_install_dependencies; check_if_exists_or_clone_neovim_repo; rebuild_neovim; sleep 3; break;;
                 [Nn]* ) echo "Starting neovim..."; break;;
                 * ) echo "Please answer yes or no.";;
             esac
@@ -106,5 +111,6 @@ fi
 if [ "$1" = "--skip-launch" ]; then
    exit 0
 fi
+
 
 trap "/usr/local/bin/nvim ${neovim_args[@]}" 0
