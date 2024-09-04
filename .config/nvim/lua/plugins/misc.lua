@@ -109,17 +109,18 @@ return {
     'renerocksai/telekasten.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim' },
     config = function()
-      local home = vim.fn.expand("~/zk/zettels")
+      -- iCloud Drive/Obsidian/Second Brain
+      local home = vim.fn.expand("~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Second Brain")
       require('telekasten').setup({
-        home = home, -- Put the name of your notes directory here
+        home = home,
         take_over_my_home = true,
         auto_set_filetype = false,
         new_note_filename = 'uuid',
         uuid_type = "%Y%m%d%H%M",
-        extension = '.md', -- differentiate between markdown files and Zettelkasten files
-        template_new_note = home .. '/' .. 'templates/new_note.zkt.md',
-        template_new_daily = home .. '/' .. 'templates/daily.zkt.md',
-        template_new_weekly = home .. '/' .. 'templates/weekly.zkt.md',
+        template_new_note = home .. '/' .. 'templates/knowledge.md',
+        template_new_daily = home .. '/' .. 'templates/daily.md',
+        template_new_weekly = home .. '/' .. 'templates/weekly.md',
+        dailies = home .. '/' .. 'daily'
       })
     end
   },
