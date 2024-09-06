@@ -26,6 +26,7 @@ table.move(mason_servers_no_version, 1, #mason_servers_no_version, 1, all_server
 -- Attaches any custom non-mason lsp servers with correct keybindings
 table.move(non_mason_servers, 1, #non_mason_servers, #all_servers + 1, all_servers)
 
+
 local formattingAugrp = vim.api.nvim_create_augroup("LspFormatting", {})
 
 local on_attach = function(client, bufnr)
@@ -74,23 +75,10 @@ for type, icon in pairs(signs) do
 end
 
 return {
+    -- show current cursor context in winbar/statusbar
     { 'SmiteshP/nvim-navic', dependencies = { 'neovim/nvim-lspconfig' } },
-    -- TODO: make this work
-    --[[ {
-        'ray-x/lsp_signature.nvim',
-        config = function()
-            local lsp_signature_cfg = {
-                bind = true,
-                use_lspsaga = false,
-                doc_lines = 0,
-                floating_window = false,
-                hint_scheme = 'LspSignatureHintVirtualText',
-                hint_prefix = ' ',
-            }
-            require('lsp_signature').setup(lsp_signature_cfg)
-        end
-    }, ]]
     {
+        -- install lsp servers seamlessly
         'williamboman/mason.nvim',
         dependencies = {
             'williamboman/mason-registry',
@@ -100,6 +88,7 @@ return {
         end
     },
     {
+        -- integrate mason lsp servers with lspconfig
         'williamboman/mason-lspconfig.nvim',
         dependencies = { 'williamboman/mason.nvim' },
         config = function()
@@ -109,6 +98,7 @@ return {
         end
     },
     {
+        -- lua lsp setup plugin
         "folke/lazydev.nvim",
         ft = "lua", -- only load on lua files
         opts = {
@@ -120,6 +110,7 @@ return {
         },
     },
     {
+        -- set up lsp servers from mason and otherwise
         'neovim/nvim-lspconfig',
         dependencies = { 'williamboman/mason-lspconfig.nvim' },
         config = function()
@@ -200,10 +191,13 @@ return {
                             on_attach(client, bufnr)
                         end
                     }
-                elseif (server == 'tsserver') then
-                    -- noop, delegate to typescript-tools.nvim
-
-                    -- General ls setup
+                elseif (server == 'eslint') then
+                    lsp.eslint.setup {
+                        on_attach = function(client, bufnr)
+                            require('nvim-navic').attach(client, bufnr)
+                            on_attach(client, bufnr)
+                        end
+                    }
                 else
                     lsp[server].setup {
                         on_attach = function(client, bufnr)
@@ -225,18 +219,21 @@ return {
                 sources = {
                     null_ls.builtins.completion.spell,
                     null_ls.builtins.diagnostics.npm_groovy_lint,
-                    null_ls.builtins.formatting.prettier,
+                    -- javascript/typescript formatting
+                    null_ls.builtins.formatting.prettierd
                 },
                 on_attach = on_attach
             }
         end
     },
     {
+        -- pick up local prettier config file
         'numToStr/prettierrc.nvim',
         ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'html', 'css', 'sass', 'less',
             'markdown', 'telekasten', 'yaml', 'vue', 'json', 'graphql' },
     },
     {
+        -- refactoring utils
         "ThePrimeagen/refactoring.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
@@ -265,12 +262,15 @@ return {
         end,
     },
     {
+        -- typescript lsp (removes need for tsserver and other lsps)
         "pmizio/typescript-tools.nvim",
         dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
         config = function()
             require("typescript-tools").setup {
                 on_attach = function(client, bufnr)
                     require('nvim-navic').attach(client, bufnr)
+                    client.server_capabilities.documentFormattingProvider = false
+                    client.server_capabilities.documentRangeFormattingProvider = false
                     on_attach(client, bufnr)
                 end,
                 settings = {
