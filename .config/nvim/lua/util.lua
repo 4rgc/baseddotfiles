@@ -13,7 +13,11 @@ M.read_exec_path = function(exec_name)
     return result
 end
 
-M.mason_servers = { 'eslint', 'lua_ls', 'tsserver', 'sqlls', 'rust_analyzer', 'marksman', 'jsonls', 'html',
-    'graphql', 'dockerls', 'docker_compose_language_service', 'dotls', }
+M.unpack = unpack or table.unpack
+
+M.mason_lsp_servers = { 'eslint', 'lua_ls', 'sqlls', 'rust_analyzer', 'marksman', 'jsonls', 'html',
+    'graphql', 'dockerls', 'docker_compose_language_service', 'dotls' }
+
+M.mason_ensure_installed = { 'eslint-lsp', 'lua-language-server', 'sqlls', 'rust-analyzer', 'marksman', 'json-lsp', 'html-lsp', 'graphql-language-service-cli', 'dockerfile-language-server', 'docker-compose-language-service', 'dot-language-server', 'prettier', 'prettierd' }
 
 return M
