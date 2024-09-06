@@ -1,3 +1,6 @@
+local mason_registry = require('mason-registry')
+local mason_ensure_installed = require('util').mason_ensure_installed
+
 vim.api.nvim_create_user_command(
   'Gc',
   function(opts)
@@ -27,3 +30,25 @@ vim.api.nvim_create_user_command(
   end,
   { nargs = "*" }
 )
+
+vim.api.nvim_create_user_command("MasonEnsureInstalled", function()
+  -- filter out the already installed packages
+  local installed = mason_registry.get_installed_package_names()
+  local installed_inverted = {}
+
+  for _, package in ipairs(installed) do
+      installed_inverted[package] = true
+  end
+
+  local to_install = {}
+  for _, package in ipairs(mason_ensure_installed) do
+    if not installed_inverted[package] then
+      table.insert(to_install, package)
+    end
+  end
+  if #to_install == 0 then
+    vim.print("All Mason packages are already installed")
+    return
+  end
+  vim.cmd("MasonInstall " .. table.concat(to_install, " "))
+end, {})
