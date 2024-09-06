@@ -1,5 +1,5 @@
 package.path = package.path .. ';../?.lua'
-local mason_servers = require('util').mason_servers
+local mason_servers = require('util').mason_lsp_servers
 
 return {
     {

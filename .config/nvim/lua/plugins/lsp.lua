@@ -1,8 +1,8 @@
 package.path = package.path .. ';../?.lua'
 local map = require('util').map
-local mason_servers = require('util').mason_servers
+local mason_lsp_servers = require('util').mason_lsp_servers
 local mason_servers_no_version = {}
-for i, v in ipairs(mason_servers) do mason_servers_no_version[i] = v:gsub('@.*', '') end
+for i, v in ipairs(mason_lsp_servers) do mason_servers_no_version[i] = v:gsub('@.*', '') end
 local non_mason_servers = { 'pylsp' }
 
 -- Check if we have all non-mason servers installed
@@ -92,6 +92,9 @@ return {
     }, ]]
     {
         'williamboman/mason.nvim',
+        dependencies = {
+            'williamboman/mason-registry',
+        },
         config = function()
             require('mason').setup()
         end
@@ -101,7 +104,7 @@ return {
         dependencies = { 'williamboman/mason.nvim' },
         config = function()
             require('mason-lspconfig').setup {
-                ensure_installed = mason_servers,
+                ensure_installed = mason_lsp_servers,
             }
         end
     },
