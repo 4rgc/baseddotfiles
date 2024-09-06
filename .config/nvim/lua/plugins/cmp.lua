@@ -3,6 +3,12 @@ local mason_servers = require('util').mason_lsp_servers
 
 return {
     {
+        'onsails/lspkind.nvim',
+        config = function()
+            require('lspkind').init()
+        end
+    },
+    {
         'hrsh7th/nvim-cmp',
         event = 'BufReadPre',
         dependencies = {
@@ -12,10 +18,12 @@ return {
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-calc',
+            'hrsh7th/cmp-omni',
             'L3MON4D3/LuaSnip',
             'saadparwaiz1/cmp_luasnip',
             'neovim/nvim-lspconfig',
-            'L3MON4D3/LuaSnip'
+            'L3MON4D3/LuaSnip',
+            'onsails/lspkind.nvim'
         },
         opts = function(_, opts)
             opts.sources = opts.sources or {}
@@ -34,6 +42,7 @@ return {
 
             local luasnip = require("luasnip")
             local cmp = require("cmp")
+            local lspkind = require('lspkind')
 
             require("luasnip.loaders.from_snipmate").lazy_load()
 
@@ -51,6 +60,19 @@ return {
                     -- completion = cmp.config.window.bordered(),
                     -- documentation = cmp.config.window.bordered(),
                 },
+                formatting = {
+                    format = lspkind.cmp_format({
+                        mode = 'symbol_text',
+                        menu = ({
+                          buffer = "[Buffer]",
+                          nvim_lsp = "[LSP]",
+                          omni = "[Omni]",
+                          luasnip = "[LuaSnip]",
+                          nvim_lua = "[Lua]",
+                          latex_symbols = "[Latex]",
+                        })
+                    })
+                }, -- formatting
                 mapping = cmp.mapping.preset.insert({
                     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -81,6 +103,9 @@ return {
                     end, { "i", "s" }),
                 }),
                 sources = cmp.config.sources({
+                    {
+                        name = 'omni'
+                    },
                     {
                         name = 'nvim_lsp',
                         entry_filter = function(entry, ctx)
