@@ -111,14 +111,20 @@ return {
   },
   -- pretty print jsx
   { 'maxmellon/vim-jsx-pretty', ft = { 'javascriptreact', 'typescriptreact' } },
+  -- {
+  --   -- goated theme
+  --   'ofirgall/ofirkai.nvim',
+  --   config = function()
+  --     -- needed because somehow the automatic setup doesn't work
+  --     require('ofirkai').setup {}
+  --     -- set the colorcolumn after the theme is loaded
+  --     vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#171712" })
+  --   end
+  -- },
   {
-    -- goated theme
-    'ofirgall/ofirkai.nvim',
+    'uZer/pywal16.nvim',
     config = function()
-      -- needed because somehow the automatic setup doesn't work
-      require('ofirkai').setup {}
-      -- set the colorcolumn after the theme is loaded
-      vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#171712" })
+      require('pywal16').setup()
     end
   },
   -- colorful brackets

@@ -3,7 +3,7 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons', 'ofirgall/ofirkai.nvim' },
     config = function()
         require('bufferline').setup {
-            highlights = require('ofirkai.tablines.bufferline').highlights, -- Must
+            -- highlights = require('ofirkai.tablines.bufferline').highlights, -- Must
             options = {
                                                                       -- Optional, recommended
                 themable = true,                                      -- Must
