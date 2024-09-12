@@ -3,13 +3,19 @@ local map = require('util').map
 local mason_lsp_servers = require('util').mason_lsp_servers
 local mason_servers_no_version = {}
 for i, v in ipairs(mason_lsp_servers) do mason_servers_no_version[i] = v:gsub('@.*', '') end
-local non_mason_servers = { 'pylsp' }
+local non_mason_servers = { 'pylsp', 'ruby_lsp' }
+local non_mason_server_executables = {
+    pylsp = 'pylsp',
+    ruby_lsp = 'solargraph',
+}
 
 -- Check if we have all non-mason servers installed
 for _, server in ipairs(non_mason_servers) do
-    if vim.fn.executable(server) == 0 then
-        error('Non-mason server ' .. server .. ' not found, skipping')
-        table.remove(non_mason_servers, table.getn())
+    if vim.fn.executable(non_mason_server_executables[server]) == 0 then
+        file = io.open(require('vim.lsp.log').get_filename(), 'a')
+        file:write('\n[WARN]['.. os.date("%Y-%m-%d %H:%M:%S") .. '] (lsp.lua) Non-mason server ' .. server .. ' not found, skipping')
+        file:close()
+        table.remove(non_mason_servers, table.getn(non_mason_servers))
     end
 end
 
@@ -191,6 +197,13 @@ return {
                             on_attach(client, bufnr)
                         end
                     }
+                elseif (server == 'ruby_lsp') then
+                    lsp.ruby_lsp.setup({
+                        on_attach = function(client, bufnr)
+                            require('nvim-navic').attach(client, bufnr)
+                            on_attach(client, bufnr)
+                        end
+                    })
                 elseif (server == 'eslint') then
                     lsp.eslint.setup {
                         on_attach = function(client, bufnr)
