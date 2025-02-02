@@ -7,7 +7,7 @@ yellow = "#d0b244"
 blue = "#6089b0"
 magenta = "#98719e"
 cyan = "#689fb2"
-white = #c5c7c5
+white = "#c5c7c5"
 
 [colors.bright]
 
