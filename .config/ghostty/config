@@ -1,0 +1,40 @@
+# Looks
+theme = Monokai Classic
+palette = 0=#1b1b1b
+palette = 1=#bd5c5d
+palette = 2=#9aa758
+palette = 3=#cbb457
+palette = 4=#6988ad
+palette = 5=#92739c
+palette = 6=#749eb0
+palette = 7=#c5c7c6
+palette = 8=#9a9a99
+palette = 9=#ea4036
+palette = 10=#387f44
+palette = 11=#c5874e
+palette = 12=#3e82e1
+palette = 13=#ea437a
+palette = 14=#4c807f
+palette = 15=#fdfdca
+background = #212121
+foreground = #D0D0D0
+cursor-color = #D0D0D0
+cursor-text = #151515
+selection-background = #303030
+selection-foreground = #D0D0D0
+macos-icon=custom-style
+macos-icon-screen-color=#212121
+macos-icon-ghost-color=#1c9c31
+macos-icon-frame=plastic
+background-opacity = 0.9
+font-thicken = true
+
+# Behavior
+window-save-state = always
+macos-titlebar-style = tabs
+confirm-close-surface = false
+window-save-state = always
+macos-option-as-alt=true
+
+# Keybinds
+keybind = super+backspace=text:\x15
