@@ -6,7 +6,7 @@ for i, v in ipairs(mason_lsp_servers) do mason_servers_no_version[i] = v:gsub('@
 local non_mason_servers = { 'pylsp', 'ruby_lsp' }
 local non_mason_server_executables = {
     pylsp = 'pylsp',
-    ruby_lsp = 'solargraph',
+    ruby_lsp = 'ruby-lsp',
 }
 
 -- Check if we have all non-mason servers installed
@@ -17,13 +17,6 @@ for _, server in ipairs(non_mason_servers) do
         file:close()
         table.remove(non_mason_servers, table.getn(non_mason_servers))
     end
-end
-
--- Check if we have solargraph installed, use it if we do
-if vim.fn.executable('solargraph') == 1 then
-    table.insert(non_mason_servers, 'solargraph')
-else
-    table.insert(mason_servers_no_version, 'solargraph')
 end
 
 local all_servers = {}
@@ -174,7 +167,7 @@ return {
                                 plugins = {
                                     pylint = {
                                         -- enable if ruff isn't good enough
-                                        enabled = false,
+                                        enabled = true,
                                     },
                                     pyflakes = { enabled = false },
                                     pycodestyle = { enabled = false },
