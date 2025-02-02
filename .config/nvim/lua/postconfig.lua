@@ -5,4 +5,5 @@
 -- Props to an4s_911 for figuring this out: https://web.archive.org/web/20240606194739/https://old.reddit.com/r/neovim/comments/19080c3/neovim_colors_malfunctioning_sometimes_works/
 vim.cmd('colorscheme ofirkai');
 
+-- Make sure all Mason packages are installed
 vim.cmd('MasonEnsureInstalled');
