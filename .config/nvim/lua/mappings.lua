@@ -50,6 +50,10 @@ map('n', '<leader>mp', MappingWithFType(
 -- map nvimtree
 map('n', '<leader>tt', '<Cmd>NvimTreeToggle<CR>')
 
+-- map copy file path
+map('n', 'yA', '<Cmd>CopyAbsPath<CR>')
+map('n', 'yR', '<Cmd>CopyRelPath<CR>')
+
 -- map close buffer
 map('n', '<leader>q', ':bp<bar>sp<bar>bn<bar>bd<CR>')
 
@@ -136,33 +140,37 @@ map("n", "<space>ts", "<cmd>Neotest summary<CR>", 'Toggle test summary')
 map("n", "<space>tj", "<cmd>Neotest jump next<CR>", 'Jump to next test')
 map("n", "<space>tk", "<cmd>Neotest jump prev<CR>", 'Jump to previous test')
 
--- Dap mappings 
+-- Dap mappings
 map('n', '<F5>', function() require('dap').continue() end, 'Continue')
 map('n', '<F10>', function() require('dap').step_over() end, 'Step over')
 map('n', '<F11>', function() require('dap').step_into() end, 'Step into')
 map('n', '<F12>', function() require('dap').step_out() end, 'Step out')
 map('n', '<Leader>b', function() require('dap').toggle_breakpoint() end, 'Toggle breakpoint')
 map('n', '<Leader>B', function() require('dap').set_breakpoint() end, 'Set breakpoint')
-map('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, 'Log point')
+map('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+    'Log point')
 map('n', '<Leader>dr', function() require('dap').repl.open() end, 'Open REPL')
 map('n', '<Leader>dd', function() require('dap').run_last() end, 'Run last')
-map({'n', 'v'}, '<Leader>dh', function()
-  require('dap.ui.widgets').hover()
+map({ 'n', 'v' }, '<Leader>dh', function()
+    require('dap.ui.widgets').hover()
 end, 'Hover')
-map({'n', 'v'}, '<Leader>dp', function()
-  require('dap.ui.widgets').preview()
+map({ 'n', 'v' }, '<Leader>dp', function()
+    require('dap.ui.widgets').preview()
 end, 'Preview')
 map('n', '<Leader>df', function()
-  local widgets = require('dap.ui.widgets')
-  widgets.centered_float(widgets.frames)
+    local widgets = require('dap.ui.widgets')
+    widgets.centered_float(widgets.frames)
 end, 'Frames')
 map('n', '<Leader>ds', function()
-  local widgets = require('dap.ui.widgets')
-  widgets.centered_float(widgets.scopes)
+    local widgets = require('dap.ui.widgets')
+    widgets.centered_float(widgets.scopes)
 end, 'Scopes')
 map('n', '<leader>dt', function()
     require('dapui').toggle()
 end, 'Variables')
+
+-- Copilot mappings
+map('i', '<M-l>', function() require('copilot.suggestion').accept_line() end, 'Accept Copilot suggestion');
 
 -- Toggleterm mappings
 map('t', '<Esc>', '<C-\\><C-n>', 'Exit terminal mode')
