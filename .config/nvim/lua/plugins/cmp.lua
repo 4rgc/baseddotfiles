@@ -1,6 +1,14 @@
 package.path = package.path .. ';../?.lua'
 local mason_servers = require('util').mason_lsp_servers
 
+local truncate = function(text, max_width)
+    if #text > max_width then
+        return string.sub(text, 1, max_width) .. "…"
+    else
+        return text
+    end
+end
+
 return {
     {
         'onsails/lspkind.nvim',
@@ -63,14 +71,45 @@ return {
                 formatting = {
                     format = lspkind.cmp_format({
                         mode = 'symbol_text',
-                        menu = ({
-                          buffer = "[Buffer]",
-                          nvim_lsp = "[LSP]",
-                          omni = "[Omni]",
-                          luasnip = "[LuaSnip]",
-                          nvim_lua = "[Lua]",
-                          latex_symbols = "[Latex]",
-                        })
+                        before = function(entry, vim_item)
+                            -- detail information (optional)
+                            local cmp_item = entry:get_completion_item() --- @type lsp.CompletionItem
+
+                            if entry.source.name == 'nvim_lsp' then
+                                -- Display which LSP servers this item came from.
+                                local lspserver_name = nil
+                                local success, _ = pcall(function()
+                                    lspserver_name = entry.source.source.client.name
+                                    vim_item.menu = lspserver_name
+                                end)
+                                if not success then
+                                    vim_item.menu = "unknown LSP"
+                                end
+                            end
+
+                            -- Some language servers provide details, e.g. type information.
+                            -- The details info hide the name of lsp server, but mostly we'll have one LSP
+                            -- per filetype, and we use special highlights so it's OK to hide it..
+                            local detail_txt = (function()
+                                if not cmp_item.detail then return nil end
+
+                                if cmp_item.detail == "Auto-import" then
+                                    local label = (cmp_item.labelDetails or {}).description
+                                    if not label or label == "" then return nil end
+                                    local logo = "󰋺"
+                                    return logo .. " " .. truncate(label, 20)
+                                else
+                                    return truncate(cmp_item.detail, 50)
+                                end
+                            end)()
+
+                            if detail_txt then
+                              vim_item.menu = detail_txt
+                              vim_item.menu_hl_group = 'CmpItemMenuDetail'
+                            end
+
+                            return vim_item
+                        end
                     })
                 }, -- formatting
                 mapping = cmp.mapping.preset.insert({
