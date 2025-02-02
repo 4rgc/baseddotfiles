@@ -173,6 +173,22 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+############################################################
+#                                                          #
+#    ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗    #
+#    ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║    #
+#    ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║    #
+#    ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║    #
+#    ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║    #
+#    ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝    #
+#                                                          #
+############################################################
+
+# Only set the alias if on MacOS
+if [[ $(uname) == "Darwin" ]]; then
+  alias nvim="~/.local/bin/nvim_launcher"
+fi
+
 ########################################
 #                                      #
 #    █████╗ ██████╗  ██████╗██╗  ██╗   #
@@ -184,8 +200,11 @@ export NVM_DIR="$HOME/.nvm"
 #                                      #
 ########################################
 
-alias pacman_browser="cmd='(pacman -Qi {}; pactree -r {})'; pacman -Q --quiet | fzf --preview \"$cmd\""
-alias pacb=pacman_browser
+# Only create the aliases if on Arch Linux
+if [[ -f /etc/arch-release ]]; then
+  alias pacman_browser="cmd='(pacman -Qi {}; pactree -r {})'; pacman -Q --quiet | fzf --preview \"$cmd\""
+  alias pacb=pacman_browser
+fi
 
 ####################################
 #                                  #
