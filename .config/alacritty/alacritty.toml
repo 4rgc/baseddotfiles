@@ -1,0 +1,12 @@
+general.import = ["colors.toml"]
+
+[scrolling]
+
+history = 20000
+
+[font]
+
+normal = { family = "MesloLGS NF", style = "Regular" }
+size = 10.5
+
+
