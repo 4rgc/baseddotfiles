@@ -26,8 +26,8 @@ macos-icon=custom-style
 macos-icon-screen-color=#212121
 macos-icon-ghost-color=#1c9c31
 macos-icon-frame=plastic
-background-opacity = 0.9
 font-thicken = true
+font-size = 10.5
 
 # Behavior
 window-save-state = always
@@ -36,5 +36,10 @@ confirm-close-surface = false
 window-save-state = always
 macos-option-as-alt=true
 
+# Linux options
+linux-cgroup=always
+
 # Keybinds
 keybind = super+backspace=text:\x15
+
+command=~/.local/bin/attach_to_ghostty_tmux_session
