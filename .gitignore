@@ -1,3 +1,4 @@
 .zshrc
 .neovim
 .config/karabiner/automatic_backups
+.config/tmux/plugins
