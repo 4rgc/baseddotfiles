@@ -42,4 +42,6 @@ linux-cgroup=always
 # Keybinds
 keybind = super+backspace=text:\x15
 
+term=xterm-256color
+
 command=/bin/zsh ~/.local/bin/attach_to_ghostty_tmux_session
