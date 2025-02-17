@@ -112,5 +112,8 @@ if [ "$1" = "--skip-launch" ]; then
    exit 0
 fi
 
+function nvim {
+    exec /usr/local/bin/nvim "${neovim_args[@]}"
+}
 
-trap "/usr/local/bin/nvim ${neovim_args[@]}" 0
+trap nvim 0
