@@ -124,11 +124,6 @@ return {
   -- colorful brackets
   { 'p00f/nvim-ts-rainbow',     lazy = true },
   {
-    -- list, make commands/keymaps/functions/autocmds
-    'mrjones2014/legendary.nvim',
-    opts = { include_builtin = true, auto_register_which_key = true }
-  },
-  {
     -- show keymaps
     'folke/which-key.nvim',
     config = function()
