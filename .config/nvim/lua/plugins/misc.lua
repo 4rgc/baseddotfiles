@@ -190,5 +190,11 @@ return {
     config = function()
       require "octo".setup()
     end
+  },
+  {
+    "aserowy/tmux.nvim",
+    config = function () 
+      require("tmux").setup({})
+    end
   }
 }

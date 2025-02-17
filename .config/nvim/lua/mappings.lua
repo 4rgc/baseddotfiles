@@ -71,8 +71,6 @@ map('n', '<leader>$', '<Cmd>BufferLineGoToBuffer -1<CR>')
 
 -- map line moving
 local moveLineOpts = { noremap = true, silent = true }
-map('n', '<A-j>', ':m .+1<cr>==', 'Move line down', moveLineOpts)
-map('n', '<A-k>', ':m .-2<cr>==', 'Move line up', moveLineOpts)
 map('i', '<A-j>', '<esc>:m .+1<cr>==gi', 'Move line down', moveLineOpts)
 map('i', '<A-k>', '<esc>:m .-2<cr>==gi', 'Move line up', moveLineOpts)
 map('v', '<A-j>', ":m '>+1<cr>gv=gv", 'Move line down', moveLineOpts)
@@ -174,3 +172,15 @@ map('i', '<M-l>', function() require('copilot.suggestion').accept_line() end, 'A
 
 -- Toggleterm mappings
 map('t', '<Esc>', '<C-\\><C-n>', 'Exit terminal mode')
+
+-- Map tmux nvim aware moving
+map('n', '<C-h>', '<cmd>lua require("tmux").move_left()<cr>', 'Move to left window')
+map('n', '<C-j>', '<cmd>lua require("tmux").move_bottom()<cr>', 'Move to bottom window')
+map('n', '<C-k>', '<cmd>lua require("tmux").move_top()<cr>', 'Move to top window')
+map('n', '<C-l>', '<cmd>lua require("tmux").move_right()<cr>', 'Move to right window')
+
+-- Map tmux nvim aware resizing
+map('n', '<A-h>', '<cmd>lua require("tmux").resize_left()<cr>', 'Grow window to left')
+map('n', '<A-j>', '<cmd>lua require("tmux").resize_bottom()<cr>', 'Grow window to bottom')
+map('n', '<A-k>', '<cmd>lua require("tmux").resize_top()<cr>', 'Grow window to top')
+map('n', '<A-l>', '<cmd>lua require("tmux").resize_right()<cr>', 'Grow window to right')
