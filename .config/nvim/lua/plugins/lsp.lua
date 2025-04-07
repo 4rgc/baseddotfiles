@@ -179,7 +179,7 @@ return {
                                     autopep8 = { enabled = false },
                                     yapf = { enabled = false },
                                     pylsp_black = { enabled = true },
-                                    pylsp_mypy = { enabled = true },
+                                    mypy = { enabled = false },
                                     ruff = { enabled = true },
                                     rope_autoimport = { enabled = true },
                                 },
@@ -226,7 +226,8 @@ return {
                     null_ls.builtins.completion.spell,
                     null_ls.builtins.diagnostics.npm_groovy_lint,
                     -- javascript/typescript formatting
-                    null_ls.builtins.formatting.prettierd
+                    null_ls.builtins.formatting.prettierd,
+                    null_ls.builtins.diagnostics.mypy,
                 },
                 on_attach = on_attach
             }
