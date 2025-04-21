@@ -33,6 +33,12 @@ return {
           priority = 'root',
           root_tell = 'index.md'
         },
+        filetypes = {
+          livemd = true,
+          md = true,
+          markdown = true,
+          rmd = true,
+        },
         bib = {
           find_in_root = true,
           default_path = 'bibliography.bib'
@@ -49,6 +55,21 @@ return {
           MkdnTablePrevRow = { 'i', '<M-CR>' },
         }
       })
+    end
+  },
+  {
+    'jubnzv/mdeval.nvim',
+    ft = { 'markdown', 'livebook' },
+    config = function()
+      require('mdeval').setup {
+        eval_options = {
+          elixir = {
+            command = { 'elixir', '--eval' },
+            languge_code = 'elixir',
+            exec_type = 'interpreted'
+          }
+        }
+      }
     end
   },
   -- auto type bracket pairs
@@ -167,6 +188,12 @@ return {
     build = "make tiktoken", -- Only on MacOS or Linux
     opts = {
       -- See Configuration section for options
+      mappings = {
+        reset = {
+          normal = "<C-x>",
+          insert = "<C-x>",
+        }
+      }
     },
     -- See Commands section for default commands if you want to lazy load on them
   },

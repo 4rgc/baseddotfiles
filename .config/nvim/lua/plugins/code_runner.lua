@@ -9,6 +9,7 @@ return {
                 focus = false,
                 filetype = {
                     python = 'python -u',
+                    elixir = 'elixir',
                 }
             }
         end
