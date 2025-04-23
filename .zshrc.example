@@ -163,6 +163,8 @@ export DOTFILES=
 #                                 #
 ###################################
 
+export PATH="$HOME/.local/bin:$PATH"
+
 export PYENV_ROOT="$HOME/.pyenv"
 # Set the default "python" version to the one set by pyenv
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"

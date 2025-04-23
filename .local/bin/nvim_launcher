@@ -63,15 +63,17 @@ rebuild_neovim() {
     cd $NEOVIM_REPO_PATH
     git pull
     echo "Please enter your sudo password to install Neovim."
-    if sudo make CMAKE_BUILD_TYPE=RelWithDebInfo ; then
+    if make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=~/.local; then
         echo "Neovim was successfully built"
     else
         echo "Error when building Neovim. Please check the logs."
+        return
     fi
-    if sudo make install ; then
+    if make install ; then
         echo "New Neovim build was successfully installed."
     else
         echo "Error when rebuilding Neovim. Please check the logs."
+        return
     fi
     cd -
     # Save UTC date to file
@@ -113,7 +115,7 @@ if [ "$1" = "--skip-launch" ]; then
 fi
 
 function nvim {
-    exec /usr/local/bin/nvim "${neovim_args[@]}"
+    exec ~/.local/bin/nvim "${neovim_args[@]}"
 }
 
 trap nvim 0
