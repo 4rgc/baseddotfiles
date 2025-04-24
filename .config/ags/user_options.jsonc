@@ -1,0 +1,51 @@
+// Options in this file override the defaults in:
+//     ~/.config/ags/modules/.configuration/default_options.jsonc
+//
+// vscode: ctrl+click this: file://./modules/.configuration/default_options.jsonc
+// vim : `:vsp` to split window, move cursor to the path, press `gf`.
+//      `Ctrl-w` twice to switch between the files
+//
+// Limitations of this file:
+// * Only line comments (//) are allowed
+// * Comments are not allowed in or below the actual content
+//   (will be nuked with updates from the UI)
+//
+//
+// Example: Put this to show 8 (instead of 10) workspaces on the bar
+// "workspaces": {"shown": 8 }
+//
+{
+    "sidebar": {
+        "pages": {
+            "apis": {
+                "defaultPage": "gpt"
+            },
+            "defaultPage": "apis"
+        }
+    },
+    "ai": {
+        "defaultGPTProvider": "openrouter-llama",
+        "extraGptModels": {
+            "openrouter-llama": {
+                "name": "OpenRouter (Llama-4-Scout-17B)",
+                "logo_name": "openrouter-symbolic",
+                "description": "A unified interface for LLMs",
+                "base_url": "https://openrouter.ai/api/v1/chat/completions",
+                "key_get_url": "https://openrouter.ai/keys",
+                "requires_key": true,
+                "key_file": "openrouter_key.txt",
+                "model": "meta-llama/llama-4-scout:free"
+            },
+            "openrouter-deepseek": {
+                "name": "OpenRouter (DeepSeek-V3-0324-685B)",
+                "logo_name": "openrouter-symbolic",
+                "description": "A unified interface for LLMs",
+                "base_url": "https://openrouter.ai/api/v1/chat/completions",
+                "key_get_url": "https://openrouter.ai/keys",
+                "requires_key": true,
+                "key_file": "openrouter_key.txt",
+                "model": "deepseek/deepseek-chat-v3-0324:free"
+            }
+        }
+    }
+}
