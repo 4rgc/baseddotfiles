@@ -228,6 +228,9 @@ return {
                     -- javascript/typescript formatting
                     null_ls.builtins.formatting.prettierd,
                     null_ls.builtins.diagnostics.mypy,
+                    null_ls.builtins.formatting.mix,
+                    null_ls.builtins.diagnostics.credo,
+                    null_ls.builtins.formatting.surface,
                 },
                 on_attach = on_attach
             }
