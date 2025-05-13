@@ -1,23 +1,3 @@
-#########################################################################################################
-#                                                                                                       #
-#    ██╗███╗   ██╗███████╗████████╗ █████╗     ██████╗ ██████╗  ██████╗ ███╗   ███╗██████╗ ████████╗    #
-#    ██║████╗  ██║██╔════╝╚══██╔══╝██╔══██╗    ██╔══██╗██╔══██╗██╔═══██╗████╗ ████║██╔══██╗╚══██╔══╝    #
-#    ██║██╔██╗ ██║███████╗   ██║   ███████║    ██████╔╝██████╔╝██║   ██║██╔████╔██║██████╔╝   ██║       #
-#    ██║██║╚██╗██║╚════██║   ██║   ██╔══██║    ██╔═══╝ ██╔══██╗██║   ██║██║╚██╔╝██║██╔═══╝    ██║       #
-#    ██║██║ ╚████║███████║   ██║   ██║  ██║    ██║     ██║  ██║╚██████╔╝██║ ╚═╝ ██║██║        ██║       #
-#    ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝        ╚═╝       #
-#                                                                                                       #
-#########################################################################################################
-
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 ########################################
 #                                      #
 #    █████╗ ██████╗  ██████╗██╗  ██╗   #
@@ -38,8 +18,9 @@ if [[ -f /etc/arch-release ]]; then
   export HYPRLAND_CONFIG_CUSTOM_LOC=~/.config/hypr/custom
 
   # Reapply colors
-  AGS_SCRIPTS_DIR=~/.config/ags/scripts
-  $AGS_SCRIPTS_DIR/color_generation/applycolor.sh --onlyterm
+  if [[ -f ~/.config/zshrc.d/dots-hyprland.zsh ]]; then
+    source ~/.config/zshrc.d/dots-hyprland.zsh
+  fi
 fi
 
 
@@ -66,7 +47,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -143,7 +124,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
 # Compilation flags
@@ -177,9 +158,10 @@ export SCRIPTS=~/.local/bin
 
 export DOTFILES=~/.dotfiles
 
-# Theme config
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Oh-my-posh config
+if [ $TERM_PROGRAM != "Apple_Terminal" ]; then
+  eval "$(oh-my-posh init zsh --config $DOTFILES/.config/ohmyposh/config.toml)"
+fi
 
 ###################################
 #                                 #
