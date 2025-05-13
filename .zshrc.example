@@ -9,12 +9,39 @@
 #                                                                                                       #
 #########################################################################################################
 
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+########################################
+#                                      #
+#    █████╗ ██████╗  ██████╗██╗  ██╗   #
+#   ██╔══██╗██╔══██╗██╔════╝██║  ██║   #
+#   ███████║██████╔╝██║     ███████║   #
+#   ██╔══██║██╔══██╗██║     ██╔══██║   #
+#   ██║  ██║██║  ██║╚██████╗██║  ██║   #
+#   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝   #
+#                                      #
+########################################
+
+# Only run these if on Arch Linux
+if [[ -f /etc/arch-release ]]; then
+  alias pacman_browser="cmd='(pacman -Qi {}; pactree -r {})'; pacman -Q --quiet | fzf --preview \"$cmd\""
+  alias pacb=pacman_browser
+
+  export HYPRLAND_CONFIG_LOC=~/.config/hypr
+  export HYPRLAND_CONFIG_CUSTOM_LOC=~/.config/hypr/custom
+
+  # Reapply colors
+  AGS_SCRIPTS_DIR=~/.config/ags/scripts
+  $AGS_SCRIPTS_DIR/color_generation/applycolor.sh --onlyterm
+fi
+
 
 ###############################################################################
 #                                                                             #
@@ -26,6 +53,8 @@ fi
 #     ╚═════╝ ╚═╝  ╚═╝    ╚═╝     ╚═╝   ╚═╝       ╚══════╝╚══════╝╚═╝  ╚═╝    #
 #                                                                             #
 ###############################################################################
+
+fastfetch
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -146,7 +175,7 @@ export NVIM_CONF=~/.config/nvim
 
 export SCRIPTS=~/.local/bin
 
-export DOTFILES=
+export DOTFILES=~/.dotfiles
 
 # Theme config
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -191,22 +220,6 @@ if [[ $(uname) == "Darwin" ]]; then
   alias nvim="~/.local/bin/nvim_launcher"
 fi
 
-########################################
-#                                      #
-#    █████╗ ██████╗  ██████╗██╗  ██╗   #
-#   ██╔══██╗██╔══██╗██╔════╝██║  ██║   #
-#   ███████║██████╔╝██║     ███████║   #
-#   ██╔══██║██╔══██╗██║     ██╔══██║   #
-#   ██║  ██║██║  ██║╚██████╗██║  ██║   #
-#   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝   #
-#                                      #
-########################################
-
-# Only create the aliases if on Arch Linux
-if [[ -f /etc/arch-release ]]; then
-  alias pacman_browser="cmd='(pacman -Qi {}; pactree -r {})'; pacman -Q --quiet | fzf --preview \"$cmd\""
-  alias pacb=pacman_browser
-fi
 
 ####################################
 #                                  #
