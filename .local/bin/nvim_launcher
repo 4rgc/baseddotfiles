@@ -80,6 +80,10 @@ rebuild_neovim() {
     date +%s > $LAST_BUILD_DATE_FILEPATH
 }
 
+function nvim {
+    exec ~/.local/bin/nvim "${neovim_args[@]}"
+}
+
 neovim_args=("$@")
 force_rebuild=false
 
@@ -87,6 +91,12 @@ force_rebuild=false
 if [ "$1" = "--rebuild" ]; then
     force_rebuild=true
     neovim_args=("${@:2}")
+fi
+
+# Check if script is ran with --version
+if [ "$1" = "--version" ]; then
+    trap nvim 0
+    exit 0
 fi
 
 # Check if LAST_BUILD_DATE is empty or force_rebuild is set
@@ -113,9 +123,5 @@ fi
 if [ "$1" = "--skip-launch" ]; then
    exit 0
 fi
-
-function nvim {
-    exec ~/.local/bin/nvim "${neovim_args[@]}"
-}
 
 trap nvim 0
