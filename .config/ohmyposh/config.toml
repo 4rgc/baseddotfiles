@@ -32,7 +32,7 @@ debug = true
   leading_diamond = ''
   trailing_diamond = ''
   template = '  {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} '
-  foreground = 'foreground'
+  foreground = 'background'
   background = 'yellow'
   type = 'aws'
   style = 'diamond'
@@ -53,6 +53,10 @@ debug = true
 
   [tooltips.properties]
     display_default = true
+
+[cache]
+duration = "1h"
+strategy = "folder"
 
 [[blocks]]
   type = 'prompt'
@@ -76,8 +80,8 @@ debug = true
     style = 'diamond'
 
   [[blocks.segments]]
-    template = '  {{ path .Path .Location }} '
-    foreground = 'foreground'
+    template = ' {{ if not .Writable }} {{ else }} {{ end }} {{ .Path }} '
+    foreground = 'white'
     powerline_symbol = ''
     background = 'red'
     type = 'path'
@@ -128,7 +132,7 @@ debug = true
   overflow = 'hidden'
 
   [[blocks.segments]]
-    template = ' '
+    template = ' {{ .Full }} '
     foreground = 'green'
     background = 'transparent'
     type = 'node'
@@ -138,19 +142,10 @@ debug = true
       display_mode = 'files'
       fetch_package_manager = false
       home_enabled = false
+      cache_duration = '4h'
 
   [[blocks.segments]]
-    template = ' '
-    foreground = 'blue'
-    background = 'transparent'
-    type = 'go'
-    style = 'plain'
-
-    [blocks.segments.properties]
-      fetch_version = false
-
-  [[blocks.segments]]
-    template = ' '
+    template = ' {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} '
     foreground = 'yellow'
     background = 'transparent'
     type = 'python'
@@ -160,6 +155,7 @@ debug = true
       display_mode = 'files'
       fetch_version = true
       fetch_virtual_env = true
+      cache_duration = '4h'
 
   [[blocks.segments]]
     type = 'executiontime'
