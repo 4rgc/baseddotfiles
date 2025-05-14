@@ -223,5 +223,16 @@ return {
     config = function () 
       require("tmux").setup({})
     end
-  }
+  },
+  { 
+    "mistricky/codesnap.nvim",
+    build = "make",
+    config = function()
+      require("codesnap").setup({
+        bg_x_padding = 40,
+        bg_y_padding = 30,
+        watermark = ""
+      })
+    end
+  },
 }
