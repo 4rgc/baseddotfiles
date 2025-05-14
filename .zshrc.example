@@ -11,7 +11,10 @@
 
 # Only run these if on Arch Linux
 if [[ -f /etc/arch-release ]]; then
-  alias pacman_browser="cmd='(pacman -Qi {}; pactree -r {})'; pacman -Q --quiet | fzf --preview \"$cmd\""
+  function pacman_browser() {
+    cmd='(pacman -Qii {}; echo "Dependency tree"; pactree -r {})'
+    pacman -Q --quiet | fzf --preview "$cmd"
+  }
   alias pacb=pacman_browser
 
   export HYPRLAND_CONFIG_LOC=~/.config/hypr
@@ -202,6 +205,18 @@ if [[ $(uname) == "Darwin" ]]; then
   alias nvim="~/.local/bin/nvim_launcher"
 fi
 
+#############################################
+#                                           #
+#     █████╗ ██╗     ██╗ █████╗ ███████╗    #
+#    ██╔══██╗██║     ██║██╔══██╗██╔════╝    #
+#    ███████║██║     ██║███████║███████╗    #
+#    ██╔══██║██║     ██║██╔══██║╚════██║    #
+#    ██║  ██║███████╗██║██║  ██║███████║    #
+#    ╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═╝╚══════╝    #
+#                                           #
+#############################################
+
+alias f=fastfetch
 
 ####################################
 #                                  #
