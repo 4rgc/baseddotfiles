@@ -63,6 +63,10 @@ if [[ -f /etc/arch-release ]]; then
   if [[ -f ~/.config/zshrc.d/dots-hyprland.zsh ]]; then
     source ~/.config/zshrc.d/dots-hyprland.zsh
   fi
+
+  export IDRIVEPATH=/opt/IDriveForLinux/bin
+
+  alias idrive="cd $IDRIVEPATH && ./idrive && cd -"
 fi
 
 #########################################################
