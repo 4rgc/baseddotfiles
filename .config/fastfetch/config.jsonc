@@ -1,7 +1,6 @@
 // ~/.config/fastfetch/config.jsonc
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-
   // Logo (uses your Neofetch image)
   "logo": {
     "type": "kitty-icat",
@@ -9,15 +8,13 @@
     "width": 52,
     "height": 30,
     "padding": {
-      "top": 1
-    }
+      "top": 1,
+    },
   },
-
   // Display settings: use your custom separator
   "display": {
     "separator": "   ",
   },
-
   // Which modules to show, in order
   "modules": [
     // ==== Custom header ====
@@ -32,28 +29,28 @@
     {
       "type": "custom",
       "format": "> 食べる 、 寝る  、 コードを書く 、 繰り返し󰕇 \n",
-      "outputColor": "italic_dim_white"
+      "outputColor": "italic_dim_white",
     },
     // ==== Hardware Information section ====
     {
       "type": "custom",
       "format": "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓",
-      "outputColor": "1"
+      "outputColor": "1",
     },
     {
       "type": "custom",
       "format": "                   ハードウエア情報",
-      "outputColor": "1"
+      "outputColor": "1",
     },
     {
       "type": "custom",
       "format": "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫",
-      "outputColor": "1"
+      "outputColor": "1",
     },
     {
       "type": "title",
       "key": "   ",
-      "format": "{2}"
+      "format": "{2}",
     },
     {
       "type": "host",
@@ -61,85 +58,81 @@
     },
     {
       "type": "cpu",
-      "key": "  󰍛 "
+      "key": "  󰍛 ",
     },
     {
       "type": "gpu",
-      "key": "  󰘚 "
+      "key": "  󰘚 ",
     },
     {
       "type": "disk",
       "key": "   ",
       "folders": "/:/home",
-      "format": "({#bold_blue}{mountpoint}{#}) - {size-used} / {size-total} ({size-percentage}) - {filesystem}"
+      "format": "({#bold_blue}{mountpoint}{#}) - {size-used} / {size-total} ({size-percentage}) - {filesystem}",
     },
     {
       "type": "memory",
       "key": "  󰟖 ",
       "percent": {
-        "type": 3     // show percent + bar :contentReference[oaicite:4]{index=4}
-      }
+        "type": 3, // show percent + bar :contentReference[oaicite:4]{index=4}
+      },
     },
     {
       "type": "display",
-      "key": "  󰍹 "
+      "key": "  󰍹 ",
     },
-
     {
       "type": "custom",
       "format": "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫",
-      "outputColor": "1"
+      "outputColor": "1",
     },
-
     // ==== Software Information section ====
     {
       "type": "custom",
       "format": "                   ソフトウエア情報",
-      "outputColor": "1"
+      "outputColor": "1",
     },
     {
       "type": "custom",
       "format": "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫",
-      "outputColor": "1"
+      "outputColor": "1",
     },
     {
       "type": "os",
-      "key": "   "
+      "key": "   ",
     },
     {
       "type": "kernel",
-      "key": "   "
+      "key": "   ",
     },
     {
       "type": "wm",
-      "key": "   "
+      "key": "   ",
     },
     {
       "type": "terminal",
-      "key": "   "
+      "key": "   ",
     },
     {
       "type": "editor",
-      "key": "   "
+      "key": "   ",
     },
     {
       "type": "terminalfont",
-      "key": "   "
+      "key": "   ",
     },
     {
       "type": "packages",
-      "key": "  󰊠 "
+      "key": "  󰊠 ",
     },
     {
       "type": "uptime",
-      "key": "  󰅐 "
+      "key": "  󰅐 ",
     },
-
     {
       "type": "custom",
-      "format": "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛"
+      "format": "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛",
     },
-
     // ==== Color blocks (Neofetch ribbon) ====
     // {
     //   "type": "colors",
@@ -149,7 +142,7 @@
     // }
     {
       "type": "custom",
-      "format": "             {#33}󰮯   {#35}󰊠   {#32}󰊠   {#36}󰊠   {#34}󰊠   {#31}󰊠   {#37}󰊠   {#30}󰊠   {#}"
-    }
-  ]
+      "format": "             {#33}󰮯   {#35}󰊠   {#32}󰊠   {#36}󰊠   {#34}󰊠   {#31}󰊠   {#37}󰊠   {#30}󰊠   {#}",
+    },
+  ],
 }
