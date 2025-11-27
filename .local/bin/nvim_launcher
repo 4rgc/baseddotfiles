@@ -7,7 +7,7 @@ if ! [[ $0 == "/Users/"*"/.local/bin/nvim_launcher" ]]; then
     exit 1
 fi
 
-NEOVIM_REPO_PATH=$(dirname $0)/../../.neovim
+NEOVIM_REPO_PATH=~/.neovim
 LAST_BUILD_DATE_FILEPATH=~/.local/share/nvim/.last_build_date
 
 if [ -f $LAST_BUILD_DATE_FILEPATH ] ; then
