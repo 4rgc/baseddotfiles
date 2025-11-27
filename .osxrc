@@ -185,13 +185,13 @@ defaults write com.apple.dock autohide -bool true
 defaults write com.apple.WindowManager GloballyEnabled -bool true
 
 # Disable Widgets in Stage Manager
-defaults write com.apple.WindowManager ShowWidgetsInStageManager -bool false
+defaults write com.apple.WindowManager StageManagerHideWidgets -bool true
 
 # Keep windows when quitting apps
 defaults write -g NSQuitAlwaysKeepsWindows -bool true
 
-# Do not rearrange Spaces based on most recent use
-defaults write -g AppleSpacesSwitchOnActivate -bool false
+# Switch to window's Space when window is Cmd+Tabbed into
+defaults write -g AppleSpacesSwitchOnActivate -bool true
 
 # Do not automatically rearrange Spaces
 defaults write com.apple.dock workspaces-auto-swoosh -bool false
@@ -281,9 +281,9 @@ defaults write com.apple.appstore InAppReviewEnabled -int 0
 
 if [[ "$RUN_AS_ROOT" = true ]]; then
   # Disable machine sleep on battery
-  pmset -b displaysleep 0
+  sudo pmset -b displaysleep 0
   # Disable machine sleep when connected to power
-  pmset -c displaysleep 0
+  sudo pmset -c displaysleep 0
 fi
 
 ###############################################################################
@@ -292,6 +292,15 @@ fi
 
 # Set the clock to show the day of the week, month, day, and time
 defaults write com.apple.menuextra.clock DateFormat -string "EEE MMM d H:mm"
+
+###############################################################################
+# Accessibility                                                               #
+###############################################################################
+
+# Enable zoom
+defaults write com.apple.universalaccess closeViewHotkeysEnabled -bool true
+defaults write com.apple.universalaccess closeViewSplitScreenRation -int 0.2
+defaults write com.apple.universalaccess closeViewZoomFactorBeforeTermination -bool true
 
 ###############################################################################
 # Kill/restart affected applications                                          #
