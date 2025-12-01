@@ -5,11 +5,15 @@ return {
     build = ':TSUpdate',
     config = function()
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", 'dockerfile', 'dot', 'git_rebase',
-          'gitattributes',
-          'gitcommit', 'gitignore', 'graphql', 'html', 'javascript', 'jsdoc', 'json', 'json5', 'latex', 'lua',
-          'markdown', 'markdown_inline', 'sql', 'python', 'regex', 'ruby', 'rust', 'scss', 'tsx', 'typescript',
-          'yaml', 'java', 'elixir' },
+        ensure_installed = {
+          'awk', 'bash', 'bibtex', 'c', 'cmake', 'comment', 'cpp', 'css', 'csv', 'desktop', 'devicetree', 'diff',
+          'dockerfile', 'dot', 'elixir', 'git_config', 'git_rebase', 'gitattributes', 'gitcommit', 'gitignore', 'gpg',
+          'graphql', 'groovy', 'html', 'http', 'hyprlang', 'ini', 'java', 'javadoc', 'javascript', 'jq', 'jsdoc',
+          'json', 'json5', 'jsonc', 'latex', 'lua', 'lua', 'luadoc', 'make', 'markdown', 'markdown_inline', 'mermaid',
+          'meson', 'nginx', 'passwd', 'pem', 'printf', 'properties', 'python', 'query', 'readline', 'regex',
+          'requirements', 'ruby', 'rust', 'scss', 'sql', 'ssh_config', 'tmux', 'todotxt', 'tsv', 'tsx', 'typescript',
+          'udev', 'vim', 'vimdoc', 'xml', 'yaml',
+        },
         highlight = {
           enable = true,
           -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
@@ -36,15 +40,15 @@ return {
               ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
             },
             selection_modes = {
-              ['@parameter.outer'] = 'v',               -- charwise
-              ['@function.outer'] = 'V',                -- linewise
-              ['@class.outer'] = '<c-v>',               -- blockwise
+              ['@parameter.outer'] = 'v', -- charwise
+              ['@function.outer'] = 'V',  -- linewise
+              ['@class.outer'] = '<c-v>', -- blockwise
             },
             include_surrounding_whitespace = true,
           },
           move = {
             enable = true,
-            set_jumps = true,             -- whether to set jumps in the jumplist
+            set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
               ["]m"] = "@function.outer",
               ["]]"] = { query = "@class.outer", desc = "Next class start" },
