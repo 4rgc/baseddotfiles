@@ -3,25 +3,23 @@ return {
     -- sessions
     'jedrzejboczar/possession.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('possession').setup {
-        commands = {
-          save = 'SSave',
-          load = 'SLoad',
-          delete = 'SDelete',
-          list = 'SList',
-        },
-        plugins = {
-          delete_hidden_buffers = {
-            hooks = {
-              'before_load',
-              not vim.o.sessionoptions:match('buffer') and 'before_save',
-            },
-            force = false, -- or fun(buf): boolean
-          }
-        },
-      }
-    end
+    opts = {
+      commands = {
+        save = 'SSave',
+        load = 'SLoad',
+        delete = 'SDelete',
+        list = 'SList',
+      },
+      plugins = {
+        delete_hidden_buffers = {
+          hooks = {
+            'before_load',
+            not vim.o.sessionoptions:match('buffer') and 'before_save',
+          },
+          force = false, -- or fun(buf): boolean
+        }
+      },
+    }
   },
   {
     -- Markdown helper commands
@@ -60,8 +58,7 @@ return {
   {
     'jubnzv/mdeval.nvim',
     ft = { 'markdown', 'livebook' },
-    config = function()
-      require('mdeval').setup {
+    opts =  {
         eval_options = {
           elixir = {
             command = { 'elixir', '--eval' },
@@ -70,10 +67,9 @@ return {
           }
         }
       }
-    end
   },
   {
-     'MeanderingProgrammer/render-markdown.nvim',
+    'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
@@ -84,7 +80,7 @@ return {
   },
   {
     "epwalsh/obsidian.nvim",
-    version = "*",  -- recommended, use latest release instead of latest commit
+    version = "*", -- recommended, use latest release instead of latest commit
     lazy = true,
     event = {
       -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
@@ -125,17 +121,16 @@ return {
   {
     'windwp/nvim-autopairs',
     event = "InsertEnter",
-    opts = {} -- this is equalent to setup({}) function
+    opts = {}
   },
   -- useful methods
   'nvim-lua/plenary.nvim',
   -- surround chunks of text/code with brackets/tags/quotes
   {
     'kylechui/nvim-surround',
+    event = { "BufReadPre", "BufNewFile" },
     version = "*",
-    config = function()
-      require('nvim-surround').setup()
-    end
+    opts = {}
   },
   {
     'iamcco/markdown-preview.nvim',
@@ -156,9 +151,7 @@ return {
   {
     'numToStr/Comment.nvim',
     event = 'BufReadPre',
-    config = function()
-      require('Comment').setup()
-    end
+    opts = {}
   },
   { 'tpope/vim-dotenv' },
   {
@@ -172,15 +165,17 @@ return {
     end
   },
   {
-    'tpope/vim-dispatch'
+    'tpope/vim-dispatch',
+    lazy = true,
   },
   -- Zettelkasten plugin and deps
   {
     'renerocksai/telekasten.nvim',
+    event = { "BufReadPre " .. vim.fn.expand "~" .. "/Nextcloud/Obsidian/Second Brain/*.md" },
     dependencies = { 'nvim-telescope/telescope.nvim' },
     config = function()
       -- iCloud Drive/Obsidian/Second Brain
-      local home = vim.fn.expand("~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Second Brain")
+      local home = vim.fn.expand("~/Nextcloud/Obsidian/Second Brain")
       require('telekasten').setup({
         home = home,
         take_over_my_home = true,
@@ -198,7 +193,7 @@ return {
     -- add copilot
     'zbirenbaum/copilot.lua',
     dependencies = { 'zbirenbaum/copilot-cmp' },
-    event = "InsertEnter",
+    event = "VeryLazy",
     cmd = 'Copilot',
     config = function()
       require('copilot').setup({
@@ -230,11 +225,12 @@ return {
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
+    event = "VeryLazy",
     dependencies = {
-      { "zbirenbaum/copilot.lua" }, 
+      { "zbirenbaum/copilot.lua" },
       { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
     },
-    build = "make tiktoken", -- Only on MacOS or Linux
+    build = "make tiktoken",                          -- Only on MacOS or Linux
     opts = {
       -- See Configuration section for options
       mappings = {
@@ -248,13 +244,13 @@ return {
   },
   {
     -- display ansi colored text
-    'powerman/vim-plugin-AnsiEsc'
+    'powerman/vim-plugin-AnsiEsc',
+    event = { "BufReadPre", "BufNewFile" },
   },
   {
     'm00qek/baleia.nvim',
-    config = function()
-      require('baleia').setup()
-    end
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {}
   },
   {
     'pwntester/octo.nvim',
@@ -263,25 +259,21 @@ return {
       'nvim-telescope/telescope.nvim',
       'nvim-tree/nvim-web-devicons',
     },
-    config = function()
-      require "octo".setup()
-    end
+    event = "VeryLazy",
+    opts = {}
   },
   {
     "aserowy/tmux.nvim",
-    config = function () 
-      require("tmux").setup({})
-    end
+    opts = {}
   },
-  { 
+  {
     "mistricky/codesnap.nvim",
+    event = "VeryLazy",
     build = "make",
-    config = function()
-      require("codesnap").setup({
+    opts = {
         bg_x_padding = 40,
         bg_y_padding = 30,
         watermark = ""
-      })
-    end
-  },
+      }
+  }
 }

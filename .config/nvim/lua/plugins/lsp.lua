@@ -28,44 +28,69 @@ table.move(non_mason_servers, 1, #non_mason_servers, #all_servers + 1, all_serve
 
 local formattingAugrp = vim.api.nvim_create_augroup("LspFormatting", {})
 
-local on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('my.lsp', {}),
+  callback = function(args)
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+    local bufnr = assert(args.buf)
+    local navic = require("nvim-navic")
+
+    if client.server_capabilities.documentSymbolProvider then
+      navic.attach(client, bufnr)
+    end
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
-    map('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration', bufopts)
-    map('n', 'gd', vim.lsp.buf.definition, 'Go to definition', bufopts)
+
+    if client:supports_method('textDocument/declaration') then
+      map('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration', bufopts)
+    end
+    if client:supports_method('textDocument/definition') then
+      map('n', 'gd', vim.lsp.buf.definition, 'Go to definition', bufopts)
+    end
     map('n', 'K', vim.lsp.buf.hover, 'Show documentation', bufopts)
     map('n', 'J', vim.diagnostic.open_float, 'Show diagnostics', bufopts)
-    map('n', 'gi', vim.lsp.buf.implementation, 'Go to implementation', bufopts)
     map('n', '<C-i>', vim.lsp.buf.signature_help, 'Show signature', bufopts)
-    map('n', '<space>wa', vim.lsp.buf.add_workspace_folder, 'Add workspace folder', bufopts)
-    map('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, 'Remove workspace folder', bufopts)
-    map('n', '<space>wl', function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, 'List workspace folders', bufopts)
-    map('n', '<space>D', vim.lsp.buf.type_definition, 'Type definition', bufopts)
-    map('n', '<space>rn', vim.lsp.buf.rename, 'Rename', bufopts)
-    map('n', '<space>ca', vim.lsp.buf.code_action, 'Code action', bufopts)
-    map('n', 'gr', vim.lsp.buf.references, 'Show references', bufopts)
-    map('n', '<space>f', function() vim.lsp.buf.format { async = true } end, 'Format', bufopts)
-
-    if client.supports_method("textDocument/formatting") then
-        vim.api.nvim_clear_autocmds({ group = formattingAugrp, buffer = bufnr })
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            group = formattingAugrp,
-            buffer = bufnr,
-            callback = function(args)
-                local file = args.file
-                if not string.find(file, '.*md$') then
-                    vim.lsp.buf.format()
-                end
-            end,
-        })
+    if client:supports_method('textDocument/implementation') then
+      map('n', 'gi', vim.lsp.buf.implementation, 'Go to implementation', bufopts)
     end
-end
+    if client:supports_method('textDocument/typeDefinition') then
+      map('n', '<space>D', vim.lsp.buf.type_definition, 'Type definition', bufopts)
+    end
+    if client:supports_method('workspace/executeCommand') then
+      map('n', '<space>ca', vim.lsp.buf.code_action, 'Code action', bufopts)
+    end
+    if client:supports_method('textDocument/rename') then
+      map('n', '<space>rn', vim.lsp.buf.rename, 'Rename', bufopts)
+    end
+    if client:supports_method('textDocument/references') then
+      map('n', 'gr', vim.lsp.buf.references, 'Show references', bufopts)
+    end
+    if client:supports_method('textDocument/formatting') then
+      map('n', '<space>f', function() vim.lsp.buf.format { async = true } end, 'Format', bufopts)
+    end
+
+    -- -- Enable auto-completion. Note: Use CTRL-Y to select an item. |complete_CTRL-Y|
+    -- if client:supports_method('textDocument/completion') then
+    --     -- Optional: trigger autocompletion on EVERY keypress. May be slow!
+    --     -- local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
+    --     -- client.server_capabilities.completionProvider.triggerCharacters = chars
+    --     vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+    -- end
+    -- Auto-format ("lint") on save.
+    -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
+    if not client:supports_method('textDocument/willSaveWaitUntil')
+        and client:supports_method('textDocument/formatting') then
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+        end,
+      })
+    end
+  end,
+})
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
@@ -75,10 +100,13 @@ end
 
 return {
     -- show current cursor context in winbar/statusbar
-    { 'SmiteshP/nvim-navic', dependencies = { 'neovim/nvim-lspconfig' } },
+    {
+      'SmiteshP/nvim-navic', dependencies = { 'neovim/nvim-lspconfig' }
+    },
     {
         -- install lsp servers seamlessly
         'williamboman/mason.nvim',
+        event = { 'BufReadPost', 'BufNewFile' },
         dependencies = {
             'williamboman/mason-registry',
         },
@@ -108,115 +136,97 @@ return {
             },
         },
     },
-    {
-        -- set up lsp servers from mason and otherwise
-        'neovim/nvim-lspconfig',
-        dependencies = { 'williamboman/mason-lspconfig.nvim' },
-        config = function()
-            local lsp = require('lspconfig')
-            local util = require('lspconfig.util')
+  {
+    -- set up lsp servers from mason and otherwise
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPost', 'BufNewFile' },
+    dependencies = { 'williamboman/mason-lspconfig.nvim' },
+    config = function()
+      local lsp = require('lspconfig')
+      local util = require('lspconfig.util')
 
-            for _, server in ipairs(all_servers) do
-                -- Special ls setup
-                if (server == 'lua_ls') then
-                    lsp.lua_ls.setup {
-                        settings = {
-                            Lua = {
-                                runtime = {
-                                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                                    version = 'LuaJIT',
-                                },
-                                diagnostics = {
-                                    -- Get the language server to recognize the `vim` global
-                                    globals = { 'vim' },
-                                },
-                                workspace = {
-                                    -- Make the server aware of Neovim runtime files
-                                    library = vim.api.nvim_get_runtime_file("", true),
-                                    checkThirdParty = false, -- THIS IS THE IMPORTANT LINE TO ADD
-                                },
-                                -- Do not send telemetry data containing a randomized but unique identifier
-                                telemetry = {
-                                    enable = false,
-                                },
-                            },
-                        },
-                        on_attach = function(client, bufnr)
-                            require('nvim-navic').attach(client, bufnr)
-                            on_attach(client, bufnr)
-                        end
-                    }
-                elseif (server == 'pylsp') then
-                    lsp.pylsp.setup {
-                        cmd = { "pylsp" --[[ , "-v"  ]] },
-                        root_dir = function(fname)
-                            local root_files = {
-                                'pyproject.toml',
-                                'setup.py',
-                                'setup.cfg',
-                                'requirements.txt',
-                                'Pipfile',
-                                '.pylintrc',
-                                '.flake8',
-                            }
-                            return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
-                        end,
-                        settings = {
-                            pylsp = {
-                                configurationSources = { "flake8" },
-                                plugins = {
-                                    pylint = {
-                                        -- enable if ruff isn't good enough
-                                        enabled = true,
-                                    },
-                                    pyflakes = { enabled = false },
-                                    pycodestyle = { enabled = false },
-                                    pydocstyle = { enabled = true },
-                                    mccabe = { enabled = true },
-                                    flake8 = {
-                                        enabled = true,
-                                    },
-                                    autopep8 = { enabled = false },
-                                    yapf = { enabled = false },
-                                    pylsp_black = { enabled = true },
-                                    mypy = { enabled = false },
-                                    ruff = { enabled = true },
-                                    rope_autoimport = { enabled = true },
-                                },
-                            }
-                        },
-                        on_attach = function(client, bufnr)
-                            require('nvim-navic').attach(client, bufnr)
-                            on_attach(client, bufnr)
-                        end
-                    }
-                elseif (server == 'ruby_lsp') then
-                    lsp.ruby_lsp.setup({
-                        on_attach = function(client, bufnr)
-                            require('nvim-navic').attach(client, bufnr)
-                            on_attach(client, bufnr)
-                        end
-                    })
-                elseif (server == 'eslint') then
-                    lsp.eslint.setup {
-                        on_attach = function(client, bufnr)
-                            require('nvim-navic').attach(client, bufnr)
-                            on_attach(client, bufnr)
-                        end
-                    }
-                else
-                    lsp[server].setup {
-                        on_attach = function(client, bufnr)
-                            require('nvim-navic').attach(client, bufnr)
-                            on_attach(client, bufnr)
-                        end
-                    }
-                end
-            end
+      for _, server in ipairs(all_servers) do
+        -- Special ls setup
+        if (server == 'lua_ls') then
+          lsp.lua_ls.setup {
+            settings = {
+              Lua = {
+                runtime = {
+                  -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                  version = 'LuaJIT',
+                },
+                diagnostics = {
+                  -- Get the language server to recognize the `vim` global
+                  globals = { 'vim' },
+                },
+                workspace = {
+                  -- Make the server aware of Neovim runtime files
+                  library = vim.api.nvim_get_runtime_file("", true),
+                  checkThirdParty = false, -- THIS IS THE IMPORTANT LINE TO ADD
+                },
+                -- Do not send telemetry data containing a randomized but unique identifier
+                telemetry = {
+                  enable = false,
+                },
+              },
+            },
+          }
+        elseif (server == 'pylsp') then
+          lsp.pylsp.setup {
+            cmd = { "pylsp" --[[ , "-v"  ]] },
+            root_dir = function(fname)
+              local root_files = {
+                'pyproject.toml',
+                'setup.py',
+                'setup.cfg',
+                'requirements.txt',
+                'Pipfile',
+                '.pylintrc',
+                '.flake8',
+              }
+              return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+            end,
+            flags = { exit_timeout = 5000 },
+            settings = {
+              pylsp = {
+                skip_token_initialization = true,
+                configurationSources = { "flake8" },
+                plugins = {
+                  pylint = {
+                    -- enable if ruff isn't good enough
+                    enabled = true,
+                    args = { '--errors-only' }
+                  },
+                  pylsp_mypy = { enabled = true },
+                  pyflakes = { enabled = false },
+                  pycodestyle = { enabled = false },
+                  pydocstyle = { enabled = true },
+                  mccabe = { enabled = true },
+                  -- flake8 = {
+                  --     enabled = true,
+                  -- },
+                  autopep8 = { enabled = false },
+                  yapf = { enabled = false },
+                  pylsp_black = { enabled = true },
+                  ruff = { enabled = true },
+                  rope_autoimport = { enabled = true },
+                },
+              }
+            },
+          }
+        elseif (server == 'ruby_lsp') then
+          lsp.ruby_lsp.setup {}
+        elseif (server == 'eslint') then
+          lsp.eslint.setup {}
+        else
+          lsp[server].setup {}
         end
-    },
+      end
+    end
+  },
     {
         'nvimtools/none-ls.nvim',
+        event = { 'BufReadPost', 'BufNewFile' },
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
             local null_ls = require('null-ls')
@@ -224,7 +234,6 @@ return {
             null_ls.setup {
                 sources = {
                     null_ls.builtins.completion.spell,
-                    null_ls.builtins.diagnostics.npm_groovy_lint,
                     -- javascript/typescript formatting
                     null_ls.builtins.formatting.prettierd,
                     null_ls.builtins.diagnostics.mypy,
@@ -232,7 +241,6 @@ return {
                     null_ls.builtins.diagnostics.credo,
                     null_ls.builtins.formatting.surface,
                 },
-                on_attach = on_attach
             }
         end
     },
@@ -274,14 +282,13 @@ return {
     {
         -- typescript lsp (removes need for tsserver and other lsps)
         "pmizio/typescript-tools.nvim",
+        ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
         dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
         config = function()
             require("typescript-tools").setup {
                 on_attach = function(client, bufnr)
-                    require('nvim-navic').attach(client, bufnr)
                     client.server_capabilities.documentFormattingProvider = false
                     client.server_capabilities.documentRangeFormattingProvider = false
-                    on_attach(client, bufnr)
                 end,
                 settings = {
                     expose_as_code_action = "all"

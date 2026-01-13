@@ -11,14 +11,8 @@ end
 
 return {
     {
-        'onsails/lspkind.nvim',
-        config = function()
-            require('lspkind').init()
-        end
-    },
-    {
         'hrsh7th/nvim-cmp',
-        event = 'BufReadPre',
+        event = { 'InsertEnter', 'CmdlineEnter' },
         dependencies = {
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-nvim-lsp',
@@ -104,8 +98,8 @@ return {
                             end)()
 
                             if detail_txt then
-                              vim_item.menu = detail_txt
-                              vim_item.menu_hl_group = 'CmpItemMenuDetail'
+                                vim_item.menu = detail_txt
+                                vim_item.menu_hl_group = 'CmpItemMenuDetail'
                             end
 
                             return vim_item
@@ -157,13 +151,15 @@ return {
                     -- { name = 'snippy' }, -- For snippy users.
                 }, {
                     { name = 'buffer' },
+                    { name = 'git' },
+                    { name = 'emoji' }
                 })
             })
 
             -- Set configuration for specific filetype.
             cmp.setup.filetype('gitcommit', {
                 sources = cmp.config.sources({
-                    { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+                    { name = 'git' }, -- You can specify the `cmp_git` source if you were installed it.
                 }, {
                     { name = 'buffer' },
                 })
@@ -196,4 +192,18 @@ return {
             end
         end
     },
+    {
+        "petertriho/cmp-git",
+        event = { 'BufReadPost', 'BufNewFile' },
+        dependencies = { 'hrsh7th/nvim-cmp' },
+        config = function()
+            require("cmp_git").setup({
+                remotes = { "origin", "upstream" },
+                github = {
+                    hosts = { "git.autodesk.com" },
+                }
+            })
+            table.insert(require("cmp").get_config().sources, { name = "git" })
+        end
+    }
 }

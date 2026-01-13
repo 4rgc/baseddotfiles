@@ -1,5 +1,14 @@
 return {
-    { 'sindrets/diffview.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
+  {
+    'sindrets/diffview.nvim',
+    event = 'VeryLazy',
+    dependencies = { 'nvim-lua/plenary.nvim' }
+  },
+  {
     'tpope/vim-fugitive',
+  },
+  {
     'lewis6991/gitsigns.nvim',
+    event = 'VeryLazy',
+  },
 }

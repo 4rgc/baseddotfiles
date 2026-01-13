@@ -20,7 +20,7 @@ return {
           command_palette = true,       -- position the cmdline and popupmenu together
           long_message_to_split = true, -- long messages will be sent to a split
           inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-          lsp_doc_border = false,       -- add a border to hover docs and signature help
+          lsp_doc_border = true,        -- add a border to hover docs and signature help
         }
       })
 
@@ -31,6 +31,7 @@ return {
   {
     -- testing UI
     "nvim-neotest/neotest",
+    event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -41,10 +42,11 @@ return {
       "marilari88/neotest-vitest",
       "jfpedroza/neotest-elixir",
       "andy-bell101/neotest-java",
-      "nvim-neotest/neotest-plenary"
+      "nvim-neotest/neotest-plenary",
+      "zidhuss/neotest-minitest",
     },
     config = function()
-      require('neotest').setup({
+      require('neotest').setup {
         adapters = {
           require('neotest-python')({}),
           require('neotest-jest')({
@@ -55,15 +57,16 @@ return {
           require('neotest-elixir')({}),
           require('neotest-java')({}),
           require('neotest-plenary')({}),
+          require('neotest-minitest')
         }
-      })
+      }
     end
   },
   {
     -- Indentation coloring
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
-    event = 'BufReadPre',
+    event = { 'BufReadPost', 'BufNewFile' },
     config = function()
       local hooks = require "ibl.hooks"
       -- create the highlight groups in the highlight setup hook, so they are reset
@@ -103,8 +106,8 @@ return {
           },
         },
         indent = {
-            char = '│',
-            tab_char = '│'
+          char = '│',
+          tab_char = '│'
         }
       }
     end
@@ -122,7 +125,10 @@ return {
     end
   },
   -- colorful brackets
-  { 'p00f/nvim-ts-rainbow',     lazy = true },
+  {
+    'p00f/nvim-ts-rainbow',
+    lazy = true
+  },
   {
     -- show keymaps
     'folke/which-key.nvim',
