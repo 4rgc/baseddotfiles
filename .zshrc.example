@@ -16,8 +16,9 @@ fi
 
 fastfetch
 
-export ANTIDOTE_PATH=$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh
-if [[ -f /etc/arch-release ]]; then
+if [[ $(uname) == "Darwin" ]]; then
+  export ANTIDOTE_PATH=$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh
+elif [[ -f /etc/arch-release ]]; then
   # On Arch, installed via AUR
   export ANTIDOTE_PATH=/usr/share/zsh-antidote/antidote.zsh
 fi
@@ -153,6 +154,25 @@ fi
 #############################################
 
 alias f=fastfetch
+alias edit=$EDITOR
+alias e=$EDITOR
+
+###########################################
+#                                         #
+#    ██╗   ██╗ █████╗ ██████╗ ███████╗    #
+#    ██║   ██║██╔══██╗██╔══██╗██╔════╝    #
+#    ██║   ██║███████║██████╔╝███████╗    #
+#    ╚██╗ ██╔╝██╔══██║██╔══██╗╚════██║    #
+#     ╚████╔╝ ██║  ██║██║  ██║███████║    #
+#      ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝    #
+#                                         #
+###########################################
+
+if [[ $(uname) == "Darwin" ]]; then
+  export NEXTCLOUD_PATH=$HOME/Library/CloudStorage/Nextcloud-admin@cloud.4rgc.dev/
+else
+  export NEXTCLOUD_PATH=$HOME/Nextcloud
+fi
 
 ####################################
 #                                  #
