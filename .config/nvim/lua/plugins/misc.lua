@@ -1,3 +1,6 @@
+local nextcloudPath = vim.fn.expand("$NEXTCLOUD_PATH")
+local secondBrainPath = nextcloudPath .. "/Obsidian/Second Brain"
+
 return {
   {
     -- sessions
@@ -58,15 +61,15 @@ return {
   {
     'jubnzv/mdeval.nvim',
     ft = { 'markdown', 'livebook' },
-    opts =  {
-        eval_options = {
-          elixir = {
-            command = { 'elixir', '--eval' },
-            languge_code = 'elixir',
-            exec_type = 'interpreted'
-          }
+    opts = {
+      eval_options = {
+        elixir = {
+          command = { 'elixir', '--eval' },
+          languge_code = 'elixir',
+          exec_type = 'interpreted'
         }
       }
+    }
   },
   {
     'MeanderingProgrammer/render-markdown.nvim',
@@ -86,7 +89,7 @@ return {
       -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
       -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
       -- refer to `:h file-pattern` for more examples
-      "BufReadPre " .. vim.fn.expand "~" .. "/Nextcloud/Obsidian/Second Brain/*.md",
+      "BufReadPre " .. vim.fn.expand "~" .. "/Obsidian/Second Brain/*.md",
     },
     dependencies = {
       -- Required.
@@ -100,7 +103,7 @@ return {
       workspaces = {
         {
           name = "personal",
-          path = "~/Nextcloud/Obsidian/Second Brain",
+          path = secondBrainPath,
         },
       },
       daily_notes = {
@@ -171,11 +174,11 @@ return {
   -- Zettelkasten plugin and deps
   {
     'renerocksai/telekasten.nvim',
-    event = { "BufReadPre " .. vim.fn.expand "~" .. "/Nextcloud/Obsidian/Second Brain/*.md" },
+    event = { "BufReadPre " .. secondBrainPath .. "/*.md" },
     dependencies = { 'nvim-telescope/telescope.nvim' },
     config = function()
       -- iCloud Drive/Obsidian/Second Brain
-      local home = vim.fn.expand("~/Nextcloud/Obsidian/Second Brain")
+      local home = secondBrainPath
       require('telekasten').setup({
         home = home,
         take_over_my_home = true,
@@ -271,9 +274,9 @@ return {
     event = "VeryLazy",
     build = "make",
     opts = {
-        bg_x_padding = 40,
-        bg_y_padding = 30,
-        watermark = ""
-      }
+      bg_x_padding = 40,
+      bg_y_padding = 30,
+      watermark = ""
+    }
   }
 }
