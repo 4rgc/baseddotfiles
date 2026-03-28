@@ -272,11 +272,12 @@ return {
   {
     "mistricky/codesnap.nvim",
     event = "VeryLazy",
-    build = "make",
     opts = {
-      bg_x_padding = 40,
-      bg_y_padding = 30,
-      watermark = ""
+      snapshot_config = {
+        watermark = {
+          content = "",
+        }
+      }
     }
   }
 }
