@@ -7,7 +7,7 @@ Personal dotfiles for an Arch Linux / Hyprland setup, tracked with git from `~/.
 ```
 .config/
   hypr/                  Hyprland WM configuration (see .config/hypr/AGENTS.md)
-  nvim/                  Neovim config (lazy.nvim)
+  nvim/                  Neovim config (lazy.nvim) (see .config/nvim/AGENTS.md)
   ghostty/               Ghostty terminal config
   ohmyposh/              Prompt theme
   tmux/                  tmux config + tpm plugins
