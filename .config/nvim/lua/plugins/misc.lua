@@ -256,7 +256,9 @@ return {
     opts = {}
   },
   {
-    'pwntester/octo.nvim',
+    "pwntester/octo.nvim",
+    -- Due to an issue with gh enterprise: https://github.com/pwntester/octo.nvim/issues/1446
+    commit = "5ae580d",
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
