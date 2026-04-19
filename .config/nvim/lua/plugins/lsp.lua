@@ -287,6 +287,11 @@ return {
         config = function()
             require("typescript-tools").setup {
                 on_attach = function(client, bufnr)
+                    local bufname = vim.api.nvim_buf_get_name(bufnr)
+                    if bufname:match("^octo://.*threads/") then
+                        vim.schedule(function() vim.lsp.buf_detach_client(bufnr, client.id) end)
+                        return
+                    end
                     client.server_capabilities.documentFormattingProvider = false
                     client.server_capabilities.documentRangeFormattingProvider = false
                 end,
