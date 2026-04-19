@@ -35,7 +35,7 @@ vim.o.colorcolumn = "120"
 
 -- treesitter fold
 vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 -- other setup
 vim.filetype.add({ filename = { ['Jenkinsfile'] = 'groovy' } })
