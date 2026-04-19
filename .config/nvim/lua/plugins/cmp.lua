@@ -115,10 +115,10 @@ return {
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
-                            -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-                            -- they way you will only jump inside the snippet region
                         elseif luasnip.expand_or_jumpable() then
                             luasnip.expand_or_jump()
+                        elseif require("copilot.suggestion").is_visible() then
+                            require("copilot.suggestion").accept()
                         elseif has_words_before() then
                             cmp.complete()
                         else
@@ -182,14 +182,6 @@ return {
                     { name = 'cmdline' }
                 })
             })
-
-            -- Set up lspconfig.
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
-            for _, server in pairs(mason_servers) do
-                require('lspconfig')[server].setup {
-                    capabilities = capabilities
-                }
-            end
         end
     },
     {

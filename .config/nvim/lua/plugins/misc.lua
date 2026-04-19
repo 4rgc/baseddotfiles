@@ -213,7 +213,7 @@ return {
         suggestion = {
           auto_trigger = true,
           keymap = {
-            accept = "<M-l>",
+            accept = false,
             prev = "<M-[>",
             next = "<M-]>",
             dismiss = "<C-]>",
