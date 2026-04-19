@@ -5,27 +5,27 @@ local map = require('util').map
 local getFType = function() return vim.bo.filetype end
 
 local function anyStrOrStrArr(strOrStrArrValue, strValue, predicate)
-    if type(strOrStrArrValue) == "string" then
-        return predicate(strOrStrArrValue, strValue)
-    elseif type(strOrStrArrValue) == "table" then
-        for _, v in ipairs(strOrStrArrValue) do
-            if predicate(v, strValue) then
-                return true
-            end
-        end
+  if type(strOrStrArrValue) == "string" then
+    return predicate(strOrStrArrValue, strValue)
+  elseif type(strOrStrArrValue) == "table" then
+    for _, v in ipairs(strOrStrArrValue) do
+      if predicate(v, strValue) then
+        return true
+      end
     end
-    return false
+  end
+  return false
 end
 
 function MappingWithFType(ftype, action)
-    return function()
-        if anyStrOrStrArr(ftype, getFType(), function(str1, str2) return str1 == str2 end)
-        then
-            action()
-        else
-            print('Not a ' .. ftype .. ' file')
-        end
+  return function()
+    if anyStrOrStrArr(ftype, getFType(), function(str1, str2) return str1 == str2 end)
+    then
+      action()
+    else
+      print('Not a ' .. ftype .. ' file')
     end
+  end
 end
 
 -- clipboard copy/paste
@@ -41,10 +41,10 @@ map('v', '<leader>P', '"+P', 'Paste from clipboard before cursor', copyPasteOpts
 
 -- map markdown preview
 map('n', '<leader>mp', MappingWithFType(
-        { 'markdown', 'telekasten' },
-        function() vim.cmd('MarkdownPreviewToggle') end
-    ),
-    'Open Markdown Preview'
+    { 'markdown', 'telekasten' },
+    function() vim.cmd('MarkdownPreviewToggle') end
+  ),
+  'Open Markdown Preview'
 )
 
 -- map nvimtree
@@ -81,6 +81,7 @@ map('n', '<leader>ff', '<cmd>Telescope git_files<cr>')
 map('n', '<leader>fa', '<cmd>Telescope find_files find_command=rg,--no-ignore-vcs,--hidden,--files<cr>')
 map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
+map('n', '<leader>ft', '<cmd>Telescope tabs<cr>')
 map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
 map('n', '<leader>fm', '<cmd>Telescope media_files<cr>')
 map('n', '<leader>fs', '<cmd>Telescope symbols<cr>')
@@ -107,7 +108,7 @@ map("n", "<C-p>", "<cmd>lua require('legendary').find()<CR>", 'Open Legendary')
 
 -- Markdown mappings
 map({ 'n', 'v' }, '<C-l>', MappingWithFType('markdown', function() vim.cmd('MkdnCreateLink') end),
-    'Create markdown hyperlink')
+  'Create markdown hyperlink')
 
 -- db mappings
 map('n', '<leader>du', '<Cmd>DBUIToggle<CR>', 'Toggle DB UI')
@@ -120,7 +121,7 @@ map('n', '<F7>', '<Cmd>RunCode<CR>', 'Run current file')
 -- Zettelkasten mappings
 -- Most used functions
 map("n", "<leader>zf", function()
-    require('telekasten').search_notes({ with_live_grep = true })
+  require('telekasten').search_notes({ with_live_grep = true })
 end, 'Find notes')
 map("n", "<leader>zg", "<cmd>Telekasten search_notes<CR>", 'Search notes')
 map("n", "<leader>zd", "<cmd>Telekasten goto_today<CR>", 'Go to today')
@@ -146,25 +147,25 @@ map('n', '<F12>', function() require('dap').step_out() end, 'Step out')
 map('n', '<Leader>b', function() require('dap').toggle_breakpoint() end, 'Toggle breakpoint')
 map('n', '<Leader>B', function() require('dap').set_breakpoint() end, 'Set breakpoint')
 map('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
-    'Log point')
+  'Log point')
 map('n', '<Leader>dr', function() require('dap').repl.open() end, 'Open REPL')
 map('n', '<Leader>dd', function() require('dap').run_last() end, 'Run last')
 map({ 'n', 'v' }, '<Leader>dh', function()
-    require('dap.ui.widgets').hover()
+  require('dap.ui.widgets').hover()
 end, 'Hover')
 map({ 'n', 'v' }, '<Leader>dp', function()
-    require('dap.ui.widgets').preview()
+  require('dap.ui.widgets').preview()
 end, 'Preview')
 map('n', '<Leader>df', function()
-    local widgets = require('dap.ui.widgets')
-    widgets.centered_float(widgets.frames)
+  local widgets = require('dap.ui.widgets')
+  widgets.centered_float(widgets.frames)
 end, 'Frames')
 map('n', '<Leader>ds', function()
-    local widgets = require('dap.ui.widgets')
-    widgets.centered_float(widgets.scopes)
+  local widgets = require('dap.ui.widgets')
+  widgets.centered_float(widgets.scopes)
 end, 'Scopes')
 map('n', '<leader>dt', function()
-    require('dapui').toggle()
+  require('dapui').toggle()
 end, 'Variables')
 
 -- Copilot mappings

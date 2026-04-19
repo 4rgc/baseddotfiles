@@ -142,86 +142,57 @@ return {
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = { 'williamboman/mason-lspconfig.nvim' },
     config = function()
-      local lsp = require('lspconfig')
-      local util = require('lspconfig.util')
+      -- Global config: cmp capabilities for all servers
+      vim.lsp.config('*', {
+        capabilities = require('cmp_nvim_lsp').default_capabilities()
+      })
 
-      for _, server in ipairs(all_servers) do
-        -- Special ls setup
-        if (server == 'lua_ls') then
-          lsp.lua_ls.setup {
-            settings = {
-              Lua = {
-                runtime = {
-                  -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                  version = 'LuaJIT',
-                },
-                diagnostics = {
-                  -- Get the language server to recognize the `vim` global
-                  globals = { 'vim' },
-                },
-                workspace = {
-                  -- Make the server aware of Neovim runtime files
-                  library = vim.api.nvim_get_runtime_file("", true),
-                  checkThirdParty = false, -- THIS IS THE IMPORTANT LINE TO ADD
-                },
-                -- Do not send telemetry data containing a randomized but unique identifier
-                telemetry = {
-                  enable = false,
-                },
-              },
+      -- Server-specific overrides
+      vim.lsp.config('lua_ls', {
+        settings = {
+          Lua = {
+            runtime = { version = 'LuaJIT' },
+            diagnostics = { globals = { 'vim' } },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
+            },
+            telemetry = { enable = false },
+          },
+        },
+      })
+
+      vim.lsp.config('pylsp', {
+        cmd = { "pylsp" },
+        root_markers = {
+          'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt',
+          'Pipfile', '.pylintrc', '.flake8', '.git',
+        },
+        settings = {
+          pylsp = {
+            skip_token_initialization = true,
+            configurationSources = { "flake8" },
+            plugins = {
+              pylint = { enabled = true, args = { '--errors-only' } },
+              pylsp_mypy = { enabled = true },
+              pyflakes = { enabled = false },
+              pycodestyle = { enabled = false },
+              pydocstyle = { enabled = true },
+              mccabe = { enabled = true },
+              -- flake8 = {
+              --     enabled = true,
+              -- },
+              autopep8 = { enabled = false },
+              yapf = { enabled = false },
+              pylsp_black = { enabled = true },
+              ruff = { enabled = true },
+              rope_autoimport = { enabled = true },
             },
           }
-        elseif (server == 'pylsp') then
-          lsp.pylsp.setup {
-            cmd = { "pylsp" --[[ , "-v"  ]] },
-            root_dir = function(fname)
-              local root_files = {
-                'pyproject.toml',
-                'setup.py',
-                'setup.cfg',
-                'requirements.txt',
-                'Pipfile',
-                '.pylintrc',
-                '.flake8',
-              }
-              return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
-            end,
-            flags = { exit_timeout = 5000 },
-            settings = {
-              pylsp = {
-                skip_token_initialization = true,
-                configurationSources = { "flake8" },
-                plugins = {
-                  pylint = {
-                    -- enable if ruff isn't good enough
-                    enabled = true,
-                    args = { '--errors-only' }
-                  },
-                  pylsp_mypy = { enabled = true },
-                  pyflakes = { enabled = false },
-                  pycodestyle = { enabled = false },
-                  pydocstyle = { enabled = true },
-                  mccabe = { enabled = true },
-                  -- flake8 = {
-                  --     enabled = true,
-                  -- },
-                  autopep8 = { enabled = false },
-                  yapf = { enabled = false },
-                  pylsp_black = { enabled = true },
-                  ruff = { enabled = true },
-                  rope_autoimport = { enabled = true },
-                },
-              }
-            },
-          }
-        elseif (server == 'ruby_lsp') then
-          lsp.ruby_lsp.setup {}
-        elseif (server == 'eslint') then
-          lsp.eslint.setup {}
-        else
-          lsp[server].setup {}
-        end
-      end
+        },
+      })
+
+      vim.lsp.enable(all_servers)
     end
   },
     {
