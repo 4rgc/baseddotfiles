@@ -2,3 +2,27 @@
 .neovim
 .config/karabiner/automatic_backups
 .config/tmux/plugins
+
+# Upstream dotfiles installation artifacts
+.config/ghostty/*.bak
+.config/hypr/*.conf.new
+.config/hypr/custom/scripts/
+.config/hypr/hyprland/scripts/
+.config/hypr/hyprland/shellOverrides/
+.config/hypr/hyprland/variables.conf
+.config/hypr/hyprlock/colors.conf
+
+# Installed tools and binaries
+.local/bin/*-o365
+.local/bin/winapps*
+.local/bin/windows
+.local/bin/explorer
+.local/bin/uv
+.local/bin/uvx
+.local/bin/qmk
+.local/bin/powershell
+.local/bin/cursor-agent
+.local/bin/idriveforlinux.bin
+.local/bin/cmd
+.local/bin/set-work-brave-flags.sh
+.local/bin/work-mode-setup.sh
