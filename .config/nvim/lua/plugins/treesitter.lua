@@ -13,7 +13,7 @@ return {
         'dockerfile', 'dot', 'elixir', 'git_config', 'git_rebase', 'gitattributes', 'gitcommit', 'gitignore', 'gpg',
         'graphql', 'groovy', 'html', 'http', 'hyprlang', 'ini', 'java', 'javadoc', 'javascript', 'jq', 'jsdoc',
         'json', 'json5', 'jsonc', 'latex', 'lua', 'luadoc', 'make', 'markdown', 'markdown_inline', 'mermaid',
-        'meson', 'nginx', 'passwd', 'pem', 'printf', 'properties', 'python', 'query', 'readline', 'regex',
+        'meson', 'nginx', 'passwd', 'pem', 'prisma', 'printf', 'properties', 'python', 'query', 'readline', 'regex',
         'requirements', 'ruby', 'rust', 'scss', 'sql', 'ssh_config', 'tmux', 'todotxt', 'tsv', 'tsx', 'typescript',
         'udev', 'vim', 'vimdoc', 'xml', 'yaml',
       }
