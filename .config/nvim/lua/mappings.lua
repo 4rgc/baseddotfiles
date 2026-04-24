@@ -85,7 +85,7 @@ map('n', '<leader>ft', '<cmd>Telescope tabs<cr>')
 map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
 map('n', '<leader>fm', '<cmd>Telescope media_files<cr>')
 map('n', '<leader>fs', '<cmd>Telescope symbols<cr>')
-map('n', '<leader>fb', '<cmd>Telescope bibtex<cr>')
+map('n', '<leader>fB', '<cmd>Telescope bibtex<cr>')
 
 -- git mappings
 map('n', '<leader>gs', '<cmd>:G<CR>')
@@ -170,6 +170,7 @@ end, 'Variables')
 
 -- Copilot mappings
 map('i', '<M-l>', function() require('copilot.suggestion').accept_line() end, 'Accept Copilot suggestion');
+map('i', '<C-/>', function() require('copilot.suggestion').accept() end, 'Accept full Copilot suggestion')
 
 -- Toggleterm mappings
 map('t', '<Esc>', '<C-\\><C-n>', 'Exit terminal mode')
