@@ -17,10 +17,10 @@ M.unpack = unpack or table.unpack
 
 M.mason_lsp_servers = { 'eslint', 'lua_ls', 'sqlls', 'rust_analyzer', 'marksman', 'jsonls', 'html',
   'graphql', 'dockerls', 'docker_compose_language_service', 'dotls' --[[ , 'basedpyright' ]], 'elixirls', 'nextls',
-  'prismals' }
+  'prismals', 'clangd' }
 
 M.mason_ensure_installed = { 'eslint-lsp', 'lua-language-server', 'sqlls', 'rust-analyzer', 'marksman', 'json-lsp',
   'html-lsp', 'graphql-language-service-cli', 'dockerfile-language-server', 'docker-compose-language-service',
-  'dot-language-server', 'prettier', 'prettierd' --[[ , 'basedpyright' ]], 'elixir-ls', 'nextls', 'prismals' }
+  'dot-language-server', 'prettier', 'prettierd' --[[ , 'basedpyright' ]], 'elixir-ls', 'nextls', 'prismals', 'clangd' }
 
 return M
